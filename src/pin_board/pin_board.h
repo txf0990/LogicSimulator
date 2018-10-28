@@ -1,12 +1,25 @@
 #ifndef PINBOARD_H
 #define PINBOARD_H
 
+#include <cstdint>
 #include <vector>
 
-class Chip;
+namespace chip {
+
+class Chip {
+public:
+    virtual void Tick() = 0;
+};
+
+}
+
+namespace pin_board {
+
+typedef std::size_t PinIndex;
+
 class PinBoard {
 public:
-    PinBoard(size_t n);
+    PinBoard(PinIndex n);
     ~PinBoard() = default;
     PinBoard(const PinBoard&) = delete;
     PinBoard(PinBoard&&) = delete;
@@ -14,20 +27,16 @@ public:
     PinBoard& operator= (PinBoard&&) = delete;
 
     void Tick();
-    bool GetPin(int);
-    void SetPin(int, bool);
+    bool GetPin(PinIndex);
+    void SetPin(PinIndex, bool);
 
 private:
-    vector<int64_t> current_status;
-    vector<int64_t> next_status;
-    vector<Chip*> chips;
-}
+    std::vector<int64_t> current_status;
+    std::vector<int64_t> next_status;
+    std::vector<chip::Chip*> chips;
+};
 
-class Chip {
-public:
-    virtual void Tick() = 0;
-}
-
+} // namespace pin_board
 
 
 #endif // #define PINBOARD_H

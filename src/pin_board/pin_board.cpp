@@ -1,8 +1,10 @@
-#include "pin_board/pin_board.h"
+#include "pin_board.h"
 
 using std::vector;
 
-PinBoard::PinBoard(size_t n) {
+namespace pin_board {
+
+PinBoard::PinBoard(PinIndex n) {
     vector<int64_t> current_status(n);
     vector<int64_t> next_status(n);
 }
@@ -14,13 +16,16 @@ void PinBoard::Tick() {
     current_status.swap(next_status);
 }
 
-bool PinBoard::GetPin(int n){
+bool PinBoard::GetPin(PinIndex n){
     // the n/64 th number.
     // the n%64 th digit from the left. (starting from 0)
     // & (1 << (63 - (n%64)))
     return current_status[n/64] & (1 << (63 - (n % 64)));
 }
 
-void PinBoard::SetPin(int n, bool result) {
-    next_status[n/64] & (1 << (63 - (n % 64))) = result;
+void PinBoard::SetPin(PinIndex n, bool result) {
+    // Compiler error!
+    // next_status[n/64] & (1 << (63 - (n % 64))) = result;
 }
+
+} // namespace pin_board
