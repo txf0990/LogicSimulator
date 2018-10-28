@@ -2,6 +2,7 @@ In this project, we will implement a PinBoard class. This class has following fu
 1. There could be multiple chips on a PinBoard. Each chip has corresponding  (multiple) input pins and output pins. 
 2. Given the current status of each pin on the board, we should be able to get the status of them at the end of each tick.
 
+```c++
 class PinBoard {
 public:
     void Tick();    // this funcion calculates the next_status according to current_status.
@@ -13,8 +14,9 @@ private:
     vector<int64_t> next_status;    // the status after each tick
     vector<Chip*> chips;     // a list of chips that sitting on the board.
 }
+```
 
-
+```
 class Chip {
 public:
     virtual void Tick() = 0;
@@ -28,3 +30,4 @@ private:
     vector<int> output_pin; // where output pins locate.
     PinBoard* mother;       // where the chip sits on.
 }
+```
