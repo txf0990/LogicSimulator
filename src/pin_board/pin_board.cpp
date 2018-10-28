@@ -1,13 +1,14 @@
 #include "pin_board/pin_board.h"
 
+#include <iostream>
+
 using std::vector;
 
 namespace pin_board {
 
-PinBoard::PinBoard(PinIndex n) {
-    vector<int64_t> current_status(n);
-    vector<int64_t> next_status(n);
-}
+PinBoard::PinBoard(PinIndex n)
+    : current_status((n + 63) / 64),
+      next_status((n + 63) / 64) {}
 
 void PinBoard::Tick() {
     for(int i = 0; i < chips.size(); i++) {
@@ -24,9 +25,9 @@ bool PinBoard::GetPin(PinIndex n){
 
 void PinBoard::SetPin(PinIndex n, bool result) {
     if (result) {
-        current_status[n/64] |= (static_cast<int64_t>(1) << (n % 64));
+        next_status[n/64] |= (static_cast<int64_t>(1) << (n % 64));
     } else {
-        current_status[n/64] &= ~(static_cast<int64_t>(1) << (n % 64));
+        next_status[n/64] &= ~(static_cast<int64_t>(1) << (n % 64));
     }
 }
 

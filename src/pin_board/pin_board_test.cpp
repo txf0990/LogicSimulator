@@ -1,22 +1,28 @@
 #include "gtest/gtest.h"
+#include "pin_board/pin_board.h"
 
 namespace {
 
-int Factorial(int n) {
-  if (n <= 0) return 1;
-  return n * Factorial(n - 1);
-}
+using pin_board::PinBoard;
 
-TEST(FactorialTest, Zero) {
-  EXPECT_EQ(1, Factorial(0));
-}
+TEST(PinBoardTest, Simple) {
+    PinBoard board(200);
 
-// Tests factorial of positive numbers.
-TEST(FactorialTest, Positive) {
-  EXPECT_EQ(1, Factorial(1));
-  EXPECT_EQ(2, Factorial(2));
-  EXPECT_EQ(6, Factorial(3));
-  EXPECT_EQ(40320, Factorial(8));
+    EXPECT_EQ(8, sizeof(int64_t));
+
+    board.SetPin(0, true);
+    board.SetPin(51, false);
+    board.SetPin(102, true);
+    board.SetPin(153, false);
+    board.SetPin(199, true);
+
+    board.Tick();
+
+    EXPECT_EQ(true, board.GetPin(0));
+    EXPECT_EQ(false, board.GetPin(51));
+    EXPECT_EQ(true, board.GetPin(102));
+    EXPECT_EQ(false, board.GetPin(153));
+    EXPECT_EQ(true, board.GetPin(199));
 }
 
 }
