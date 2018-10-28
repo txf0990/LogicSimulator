@@ -1,4 +1,4 @@
-#include "pin_board.h"
+#include "pin_board/pin_board.h"
 
 using std::vector;
 
