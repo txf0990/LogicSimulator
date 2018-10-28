@@ -7,9 +7,11 @@ class Chip;
 class PinBoard {
 public:
     PinBoard(size_t n);
-    // TODO: delete copy constructor
-    // TODO: delete opereator=
     ~PinBoard() = default;
+    PinBoard(const PinBoard&) = delete;
+    PinBoard(PinBoard&&) = delete;
+    PinBoard& operator= (const PinBoard&) = delete;
+    PinBoard& operator= (PinBoard&&) = delete;
 
     void Tick();
     bool GetPin(int);
