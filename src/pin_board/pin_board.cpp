@@ -17,15 +17,17 @@ void PinBoard::Tick() {
 }
 
 bool PinBoard::GetPin(PinIndex n){
-    // the n/64 th number.
-    // the n%64 th digit from the left. (starting from 0)
-    // & (1 << (63 - (n%64)))
-    return current_status[n/64] & (1 << (63 - (n % 64)));
+    // the n/64-th number in the vector.
+    // the n%64-th bit of the number.
+    return current_status[n/64] & (static_cast<int64_t>(1) << (n % 64));
 }
 
 void PinBoard::SetPin(PinIndex n, bool result) {
-    // Compiler error!
-    // next_status[n/64] & (1 << (63 - (n % 64))) = result;
+    if (result) {
+        current_status[n/64] |= (static_cast<int64_t>(1) << (n % 64));
+    } else {
+        current_status[n/64] &= ~(static_cast<int64_t>(1) << (n % 64));
+    }
 }
 
 } // namespace pin_board
