@@ -1,3 +1,6 @@
+project/
+*.swp
+
 # Prerequisites
 *.d
 
