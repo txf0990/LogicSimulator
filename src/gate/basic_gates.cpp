@@ -1,4 +1,4 @@
-#include "BasicGates.h"
+#include "basic_gates.h"
 
 using std::vector;
 
