@@ -16,7 +16,7 @@ private:
 }
 ```
 
-```
+```c++
 class Chip {
 public:
     virtual void Tick() = 0;
