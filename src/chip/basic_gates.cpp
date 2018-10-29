@@ -1,5 +1,7 @@
 #include "basic_gates.h"
 
+namespace chip {
+
 using std::vector;
 
 void AndGate::Tick() {
@@ -23,3 +25,4 @@ void NotGate::Tick() {
     mother->SetPin(output_pin, result);
 }
 
+}   // namespace chip
