@@ -4,14 +4,7 @@
 #include <cstdint>
 #include <vector>
 
-namespace chip {
-
-class Chip {
-public:
-    virtual void Tick() = 0;
-};
-
-}
+#include "chip/chip.h"
 
 namespace pin_board {
 
@@ -37,6 +30,5 @@ private:
 };
 
 } // namespace pin_board
-
 
 #endif // #define PINBOARD_H

@@ -3,8 +3,10 @@
 
 #include <vector>
 
-class PinBoard;
-class Chip;
+#include "chip/chip.h"
+#include "pin_board/pin_board.h"
+
+namespace chip {
 
 class AndGate : virtual public Chip {
 public:
@@ -14,7 +16,7 @@ private:
     vector<int> input_pin;
     int output_pin;
     PinBoard* mother;
-}
+};
 
 class OrGate : virtual public Chip {
 public:
@@ -24,7 +26,7 @@ private:
     vector<int> input_pin;
     int output_pin;
     PinBoard* mother;
-}
+};
 
 class NotGate : virtual public Chip {
 public:
@@ -34,5 +36,8 @@ private:
     int input_pin;
     int output_pin;
     PinBoard* mother;
-}
+};
+
+} // namespace chip
+
 #endif  // BASICGATES_H
