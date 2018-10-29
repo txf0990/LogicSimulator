@@ -6,8 +6,8 @@ In this project, we will implement a PinBoard class. This class has following fu
 class PinBoard {
 public:
     void Tick();    // this funcion calculates the next_status according to current_status.
-    bool GetStatus(int);    // get the status of the pin #?
-    void SetStatus(int, bool)   // set the status of pin #? to bool?
+    bool GetPin(int);    // get the status of the pin #?
+    void SetPin(int, bool)   // set the status of pin #? to bool?
 
 private:
     vector<int64_t> current_status;    // the current status(before each tick)
