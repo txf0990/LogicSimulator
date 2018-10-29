@@ -31,4 +31,8 @@ void PinBoard::SetPin(PinIndex n, bool result) {
     }
 }
 
+void PinBoard::PlugChip(chip::Chip* p) {
+    chips.push_back(p);
+}
+
 } // namespace pin_board

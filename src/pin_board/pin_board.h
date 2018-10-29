@@ -22,6 +22,7 @@ public:
     void Tick();
     bool GetPin(PinIndex);
     void SetPin(PinIndex, bool);
+    void PlugChip(chip::Chip*);
 
 private:
     std::vector<int64_t> current_status;
