@@ -2,6 +2,7 @@
 #define PINBOARD_H
 
 #include <cstdint>
+#include <memory>
 #include <vector>
 
 #include "chip/chip.h"
@@ -13,7 +14,7 @@ typedef std::size_t PinIndex;
 class PinBoard {
 public:
     PinBoard(PinIndex n);
-    ~PinBoard();
+    ~PinBoard() = default;
     PinBoard(const PinBoard&) = delete;
     PinBoard(PinBoard&&) = delete;
     PinBoard& operator= (const PinBoard&) = delete;
@@ -22,12 +23,12 @@ public:
     void Tick();
     bool GetPin(PinIndex);
     void SetPin(PinIndex, bool);
-    void PlugChip(chip::Chip*);
+    void PlugChip(std::unique_ptr<chip::Chip>);
 
 private:
     std::vector<int64_t> current_status;
     std::vector<int64_t> next_status;
-    std::vector<chip::Chip*> chips;
+    std::vector<std::unique_ptr<chip::Chip>> chips;
 };
 
 } // namespace pin_board
