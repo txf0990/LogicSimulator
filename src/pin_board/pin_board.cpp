@@ -10,6 +10,12 @@ PinBoard::PinBoard(PinIndex n)
     : current_status((n + 63) / 64),
       next_status((n + 63) / 64) {}
 
+PinBoard::~PinBoard() {
+    for(int i = 0; i < chips.size(); i++) {
+        delete chips[i];
+    }
+}
+
 void PinBoard::Tick() {
     for(int i = 0; i < chips.size(); i++) {
         chips[i]->Tick();

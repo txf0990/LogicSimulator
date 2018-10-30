@@ -5,6 +5,7 @@ namespace chip {
 
 class Chip {
 public:
+    virtual ~Chip() = default;
     virtual void Tick() = 0;
 };
 

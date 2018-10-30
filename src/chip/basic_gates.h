@@ -13,6 +13,7 @@ public:
     AndGate(std::vector<int> v, int t, pin_board::PinBoard* p) : input_pin(std::move(v)), output_pin(t), mother(p){
         p->PlugChip(this);
     }
+    ~AndGate() = default;
     void Tick();
 private:
     std::vector<int> input_pin;
@@ -25,6 +26,7 @@ public:
     OrGate(std::vector<int> v, int t, pin_board::PinBoard* p) : input_pin(v), output_pin(t), mother(p){
         p->PlugChip(this);
     }
+    ~OrGate() = default;
     void Tick();
 private:
     std::vector<int> input_pin;
@@ -37,6 +39,7 @@ public:
     NotGate(int v, int t, pin_board::PinBoard* p) : input_pin(v), output_pin(t), mother(p) {
         p->PlugChip(this);
     }
+    ~NotGate() = default;
     void Tick();
 private:
     int input_pin;

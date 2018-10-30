@@ -13,7 +13,7 @@ typedef std::size_t PinIndex;
 class PinBoard {
 public:
     PinBoard(PinIndex n);
-    ~PinBoard() = default;
+    ~PinBoard();
     PinBoard(const PinBoard&) = delete;
     PinBoard(PinBoard&&) = delete;
     PinBoard& operator= (const PinBoard&) = delete;
