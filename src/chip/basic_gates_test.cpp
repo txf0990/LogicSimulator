@@ -1,22 +1,36 @@
 #include "gtest/gtest.h"
 #include "chip/basic_gates.h"
 
+//#include <utility>
+#include <vector>
+
 namespace {
 
 using pin_board::PinBoard;
+using pin_board::PinIndex;
 using chip::AndGate;
 using chip::OrGate;
 using chip::NotGate;
 using std::vector;
 
+void InitPins(PinBoard* board, std::vector<std::pair<PinIndex, bool>> input) {
+    for (const auto& p : input) {
+        board->SetPin(p.first, p.second);
+    }
+    board->Tick();
+    for (const auto& p : input) {
+        board->SetPin(p.first, p.second);
+    }
+}
+
 TEST(BasicGatesTest, AndGate2) {
     PinBoard* board = new PinBoard(10);
-    board->SetPin(0, true);
-    board->SetPin(1, true);
-    board->SetPin(2, false);
-    board->SetPin(3, false);
-
-    board->Tick();
+    InitPins(board, {
+        {0, true},
+        {1, true},
+        {2, false},
+        {3, false}
+    });
 
     AndGate* p1 = new AndGate({0,1}, 4, board);
     AndGate* p2 = new AndGate({0,2}, 5, board);
@@ -31,12 +45,14 @@ TEST(BasicGatesTest, AndGate2) {
 
 TEST(BasicGatesTest, AndGate3) {
     PinBoard* board = new PinBoard(10);
-    board->SetPin(0, true);
-    board->SetPin(1, true);
-    board->SetPin(2, true);
-    board->SetPin(3, false);
-    board->SetPin(4, false);
-    board->SetPin(5, false);
+    InitPins(board, {
+        {0, true},
+        {1, true},
+        {2, true},
+        {3, false},
+        {4, false},
+        {5, false},
+    });
 
     board->Tick();
 
@@ -55,10 +71,12 @@ TEST(BasicGatesTest, AndGate3) {
 
 TEST(BasicGatesTest, OrGate2) {
     PinBoard* board = new PinBoard(10);
-    board->SetPin(0, true);
-    board->SetPin(1, true);
-    board->SetPin(2, false);
-    board->SetPin(3, false);
+    InitPins(board, {
+        {0, true},
+        {1, true},
+        {2, false},
+        {3, false},
+    });
 
     board->Tick();
 
@@ -75,12 +93,14 @@ TEST(BasicGatesTest, OrGate2) {
 
 TEST(BasicGatesTest, OrGate3) {
     PinBoard* board = new PinBoard(10);
-    board->SetPin(0, true);
-    board->SetPin(1, true);
-    board->SetPin(2, true);
-    board->SetPin(3, false);
-    board->SetPin(4, false);
-    board->SetPin(5, false);
+    InitPins(board, {
+        {0, true},
+        {1, true},
+        {2, true},
+        {3, false},
+        {4, false},
+        {5, false},
+    });
 
     board->Tick();
 
@@ -99,8 +119,10 @@ TEST(BasicGatesTest, OrGate3) {
 
 TEST(BasicGatesTest, NotGate) {
     PinBoard* board = new PinBoard(4);
-    board->SetPin(0, true);
-    board->SetPin(1, false);
+    InitPins(board, {
+        {0, true},
+        {1, false},
+    });
 
     board->Tick();
 
@@ -112,53 +134,5 @@ TEST(BasicGatesTest, NotGate) {
     EXPECT_EQ(false, board->GetPin(2));
     EXPECT_EQ(true, board->GetPin(3));
 }
-
-/*
-TEST(BasicGatesTest, Simple) {
-    PinBoard* board = new PinBoard(20);
-
-    board->SetPin(0, true);
-    board->SetPin(1, true);
-    board->SetPin(3, true);
-    board->SetPin(5, true);
-    board->SetPin(6, true);
-    board->SetPin(8, true);
-    board->SetPin(9, true);
-
-    board->SetPin(10, true);
-    board->SetPin(11, true);
-    board->SetPin(13, true);
-    board->SetPin(15, true);
-    board->SetPin(16, true);
-    board->SetPin(18, true);
-    board->SetPin(19, true);
-    
-    board->Tick();
-
-    EXPECT_EQ(true, board->GetPin(1));
-    EXPECT_EQ(false, board->GetPin(2));
-    EXPECT_EQ(true, board->GetPin(3));
-    EXPECT_EQ(false, board->GetPin(4));
-    EXPECT_EQ(true, board->GetPin(8));
-    EXPECT_EQ(true, board->GetPin(9));
-
-    AndGate* p1 = new AndGate({0,1,2},3,board);
-    OrGate* p2 = new OrGate({4,5,6},7,board);
-    OrGate* p3 = new OrGate({10,11,12},13,board);
-    AndGate* p4 = new AndGate({14,15,16},17,board);
-    NotGate* p5 = new NotGate(8,9,board);
-    NotGate* p6 = new NotGate(19,18,board);
-
-    board->Tick();
-
-    EXPECT_EQ(false, board->GetPin(3));
-    EXPECT_EQ(true, board->GetPin(7));
-    EXPECT_EQ(true, board->GetPin(13));
-    EXPECT_EQ(false, board->GetPin(17));
-    EXPECT_EQ(true, board->GetPin(8));
-    EXPECT_EQ(false, board->GetPin(9));
-
-}
-*/
 
 }
