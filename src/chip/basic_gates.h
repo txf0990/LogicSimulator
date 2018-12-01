@@ -11,7 +11,6 @@ namespace chip {
 class AndGate : virtual public Chip {
 public:
     AndGate(std::vector<int> v, int t, pin_board::PinBoard* p) : input_pin(std::move(v)), output_pin(t), mother(p){
-        p->PlugChip(std::unique_ptr<AndGate>(this));
     }
     ~AndGate() = default;
     void Tick();
@@ -24,7 +23,6 @@ private:
 class OrGate : virtual public Chip {
 public:
     OrGate(std::vector<int> v, int t, pin_board::PinBoard* p) : input_pin(v), output_pin(t), mother(p){
-        p->PlugChip(std::unique_ptr<OrGate>(this));
     }
     ~OrGate() = default;
     void Tick();
@@ -37,7 +35,6 @@ private:
 class NotGate : virtual public Chip {
 public:
     NotGate(int v, int t, pin_board::PinBoard* p) : input_pin(v), output_pin(t), mother(p) {
-        p->PlugChip(std::unique_ptr<NotGate>(this));
     }
     ~NotGate() = default;
     void Tick();
