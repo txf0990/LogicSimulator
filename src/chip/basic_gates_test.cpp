@@ -26,8 +26,9 @@ void InitPins(PinBoard* board, std::vector<std::pair<PinIndex, bool>> input) {
 }
 
 TEST(BasicGatesTest, AndGate2) {
-    PinBoard* board = new PinBoard(10);
-    InitPins(board, {
+    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10);
+    
+    InitPins(board.get(), {
         {0, true},
         {1, true},
         {2, false},
@@ -36,11 +37,11 @@ TEST(BasicGatesTest, AndGate2) {
 
     board->Tick();
 
-    std::unique_ptr<Chip> p1 = std::make_unique<AndGate>(std::vector<int>({0,1}), 4, board);
+    std::unique_ptr<Chip> p1 = std::make_unique<AndGate>(std::vector<int>({0,1}), 4, board.get());
     board->PlugChip(std::move(p1));
-    std::unique_ptr<Chip> p2 = std::make_unique<AndGate>(std::vector<int>({0,2}), 5, board);
+    std::unique_ptr<Chip> p2 = std::make_unique<AndGate>(std::vector<int>({0,2}), 5, board.get());
     board->PlugChip(std::move(p2));
-    std::unique_ptr<Chip> p3 = std::make_unique<AndGate>(std::vector<int>({2,3}), 6, board);
+    std::unique_ptr<Chip> p3 = std::make_unique<AndGate>(std::vector<int>({2,3}), 6, board.get());
     board->PlugChip(std::move(p3));
 
     board->Tick();
@@ -48,13 +49,12 @@ TEST(BasicGatesTest, AndGate2) {
     EXPECT_EQ(true, board->GetPin(4));
     EXPECT_EQ(false, board->GetPin(5));
     EXPECT_EQ(false, board->GetPin(6));
-
-    delete board;
 }
 
 TEST(BasicGatesTest, AndGate3) {
-    PinBoard* board = new PinBoard(10);
-    InitPins(board, {
+    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10);
+
+    InitPins(board.get(), {
         {0, true},
         {1, true},
         {2, true},
@@ -65,13 +65,13 @@ TEST(BasicGatesTest, AndGate3) {
 
     board->Tick();
 
-    std::unique_ptr<Chip> p1 = std::make_unique<AndGate>(std::vector<int>({0,1,2}), 6, board);
+    std::unique_ptr<Chip> p1 = std::make_unique<AndGate>(std::vector<int>({0,1,2}), 6, board.get());
     board->PlugChip(std::move(p1));
-    std::unique_ptr<Chip> p2 = std::make_unique<AndGate>(std::vector<int>({0,2,3}), 7, board);
+    std::unique_ptr<Chip> p2 = std::make_unique<AndGate>(std::vector<int>({0,2,3}), 7, board.get());
     board->PlugChip(std::move(p2));
-    std::unique_ptr<Chip> p3 = std::make_unique<AndGate>(std::vector<int>({0,3,4}), 8, board);
+    std::unique_ptr<Chip> p3 = std::make_unique<AndGate>(std::vector<int>({0,3,4}), 8, board.get());
     board->PlugChip(std::move(p3));
-    std::unique_ptr<Chip> p4 = std::make_unique<AndGate>(std::vector<int>({3,4,5}), 9, board);
+    std::unique_ptr<Chip> p4 = std::make_unique<AndGate>(std::vector<int>({3,4,5}), 9, board.get());
     board->PlugChip(std::move(p4));
 
     board->Tick();
@@ -83,8 +83,9 @@ TEST(BasicGatesTest, AndGate3) {
 }
 
 TEST(BasicGatesTest, OrGate2) {
-    PinBoard* board = new PinBoard(10);
-    InitPins(board, {
+    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10);
+
+    InitPins(board.get(), {
         {0, true},
         {1, true},
         {2, false},
@@ -93,11 +94,11 @@ TEST(BasicGatesTest, OrGate2) {
 
     board->Tick();
 
-    std::unique_ptr<Chip> p1 = std::make_unique<OrGate>(std::vector<int>({0,1}), 4, board);
+    std::unique_ptr<Chip> p1 = std::make_unique<OrGate>(std::vector<int>({0,1}), 4, board.get());
     board->PlugChip(std::move(p1));
-    std::unique_ptr<Chip> p2 = std::make_unique<OrGate>(std::vector<int>({0,2}), 5, board);
+    std::unique_ptr<Chip> p2 = std::make_unique<OrGate>(std::vector<int>({0,2}), 5, board.get());
     board->PlugChip(std::move(p2));
-    std::unique_ptr<Chip> p3 = std::make_unique<OrGate>(std::vector<int>({2,3}), 6, board);
+    std::unique_ptr<Chip> p3 = std::make_unique<OrGate>(std::vector<int>({2,3}), 6, board.get());
     board->PlugChip(std::move(p3));
 
     board->Tick();
@@ -108,8 +109,9 @@ TEST(BasicGatesTest, OrGate2) {
 }
 
 TEST(BasicGatesTest, OrGate3) {
-    PinBoard* board = new PinBoard(10);
-    InitPins(board, {
+    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10);
+
+    InitPins(std::move(board.get()), {
         {0, true},
         {1, true},
         {2, true},
@@ -120,13 +122,13 @@ TEST(BasicGatesTest, OrGate3) {
 
     board->Tick();
 
-    std::unique_ptr<Chip> p1 = std::make_unique<OrGate>(std::vector<int>({0,1,2}), 6, board);
+    std::unique_ptr<Chip> p1 = std::make_unique<OrGate>(std::vector<int>({0,1,2}), 6, board.get());
     board->PlugChip(std::move(p1));
-    std::unique_ptr<Chip> p2 = std::make_unique<OrGate>(std::vector<int>({0,2,3}), 7, board);
+    std::unique_ptr<Chip> p2 = std::make_unique<OrGate>(std::vector<int>({0,2,3}), 7, board.get());
     board->PlugChip(std::move(p2));
-    std::unique_ptr<Chip> p3 = std::make_unique<OrGate>(std::vector<int>({0,3,4}), 8, board);
+    std::unique_ptr<Chip> p3 = std::make_unique<OrGate>(std::vector<int>({0,3,4}), 8, board.get());
     board->PlugChip(std::move(p3));
-    std::unique_ptr<Chip> p4 = std::make_unique<OrGate>(std::vector<int>({3,4,5}), 9, board);
+    std::unique_ptr<Chip> p4 = std::make_unique<OrGate>(std::vector<int>({3,4,5}), 9, board.get());
     board->PlugChip(std::move(p4));
 
     board->Tick();
@@ -138,17 +140,18 @@ TEST(BasicGatesTest, OrGate3) {
 }
 
 TEST(BasicGatesTest, NotGate) {
-    PinBoard* board = new PinBoard(4);
-    InitPins(board, {
+    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (4);
+
+    InitPins(board.get(), {
         {0, true},
         {1, false},
     });
 
     board->Tick();
 
-    std::unique_ptr<Chip> p1 = std::make_unique<NotGate>(0, 2, board);
+    std::unique_ptr<Chip> p1 = std::make_unique<NotGate>(0, 2, board.get());
     board->PlugChip(std::move(p1));
-    std::unique_ptr<Chip> p2 = std::make_unique<NotGate>(1, 3, board);
+    std::unique_ptr<Chip> p2 = std::make_unique<NotGate>(1, 3, board.get());
     board->PlugChip(std::move(p2));
 
     board->Tick();
