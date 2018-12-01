@@ -31,6 +31,11 @@ void PinBoard::SetPin(PinIndex n, bool result) {
     }
 }
 
+PinIndex PinBoard::AllocatePin() {
+    allocated_pin++;
+    return allocated_pin - 1;
+}
+
 void PinBoard::PlugChip(std::unique_ptr<chip::Chip> p) {
     p->SetMother(this);
     chips.push_back(std::move(p));

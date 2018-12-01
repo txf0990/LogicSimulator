@@ -23,11 +23,13 @@ public:
     void Tick();
     bool GetPin(PinIndex);
     void SetPin(PinIndex, bool);
+    PinIndex AllocatePin();
     void PlugChip(std::unique_ptr<chip::Chip>);
 
 private:
     std::vector<int64_t> current_status;
     std::vector<int64_t> next_status;
+    PinIndex allocated_pin = 0;
     std::vector<std::unique_ptr<chip::Chip>> chips;
 };
 

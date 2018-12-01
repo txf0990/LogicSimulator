@@ -25,4 +25,13 @@ TEST(PinBoardTest, Simple) {
     EXPECT_EQ(true, board.GetPin(199));
 }
 
+TEST(PinBoardTest, PinAllocationTest) {
+    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (8);
+
+    EXPECT_EQ(0, board->AllocatePin());
+    EXPECT_EQ(1, board->AllocatePin());
+    EXPECT_EQ(2, board->AllocatePin());
+    EXPECT_EQ(3, board->AllocatePin());
+}
+
 }
