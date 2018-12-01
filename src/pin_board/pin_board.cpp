@@ -6,9 +6,10 @@ using std::vector;
 
 namespace pin_board {
 
-PinBoard::PinBoard(PinIndex n)
+PinBoard::PinBoard(PinIndex n, PinIndex x, PinIndex y)
     : current_status((n + 63) / 64),
-      next_status((n + 63) / 64) {}
+      next_status((n + 63) / 64), input_num(x), output_num(y), allocated_pin(x + y){
+      }
 
 void PinBoard::Tick() {
     for(int i = 0; i < chips.size(); i++) {

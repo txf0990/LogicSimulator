@@ -6,7 +6,7 @@ namespace {
 using pin_board::PinBoard;
 
 TEST(PinBoardTest, Simple) {
-    PinBoard board(200);
+    PinBoard board(200, 10, 20);
 
     EXPECT_EQ(8, sizeof(int64_t));
 
@@ -26,12 +26,12 @@ TEST(PinBoardTest, Simple) {
 }
 
 TEST(PinBoardTest, PinAllocationTest) {
-    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (8);
+    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (200, 10, 20);
 
-    EXPECT_EQ(0, board->AllocatePin());
-    EXPECT_EQ(1, board->AllocatePin());
-    EXPECT_EQ(2, board->AllocatePin());
-    EXPECT_EQ(3, board->AllocatePin());
+    EXPECT_EQ(30, board->AllocatePin());
+    EXPECT_EQ(31, board->AllocatePin());
+    EXPECT_EQ(32, board->AllocatePin());
+    EXPECT_EQ(33, board->AllocatePin());
 }
 
 }

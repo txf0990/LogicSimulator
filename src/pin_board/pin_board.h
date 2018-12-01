@@ -13,7 +13,7 @@ typedef std::size_t PinIndex;
 
 class PinBoard {
 public:
-    PinBoard(PinIndex n);
+    PinBoard(PinIndex n, PinIndex x, PinIndex y);
     ~PinBoard() = default;
     PinBoard(const PinBoard&) = delete;
     PinBoard(PinBoard&&) = delete;
@@ -29,6 +29,8 @@ public:
 private:
     std::vector<int64_t> current_status;
     std::vector<int64_t> next_status;
+    PinIndex input_num = 0;
+    PinIndex output_num = 0;
     PinIndex allocated_pin = 0;
     std::vector<std::unique_ptr<chip::Chip>> chips;
 };

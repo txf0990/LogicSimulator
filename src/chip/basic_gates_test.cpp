@@ -26,7 +26,7 @@ void InitPins(PinBoard* board, std::vector<std::pair<PinIndex, bool>> input) {
 }
 
 TEST(BasicGatesTest, AndGate2) {
-    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10);
+    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10,2,2);
     
     InitPins(board.get(), {
         {0, true},
@@ -52,7 +52,7 @@ TEST(BasicGatesTest, AndGate2) {
 }
 
 TEST(BasicGatesTest, AndGate3) {
-    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10);
+    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10,2,2);
 
     InitPins(board.get(), {
         {0, true},
@@ -83,7 +83,7 @@ TEST(BasicGatesTest, AndGate3) {
 }
 
 TEST(BasicGatesTest, OrGate2) {
-    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10);
+    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10,2,2);
 
     InitPins(board.get(), {
         {0, true},
@@ -109,7 +109,7 @@ TEST(BasicGatesTest, OrGate2) {
 }
 
 TEST(BasicGatesTest, OrGate3) {
-    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10);
+    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10,2,2);
 
     InitPins(std::move(board.get()), {
         {0, true},
@@ -140,7 +140,7 @@ TEST(BasicGatesTest, OrGate3) {
 }
 
 TEST(BasicGatesTest, NotGate) {
-    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (4);
+    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (4,1,1);
 
     InitPins(board.get(), {
         {0, true},
