@@ -42,4 +42,14 @@ void PinBoard::PlugChip(std::unique_ptr<chip::Chip> p) {
     chips.push_back(std::move(p));
 }
 
+void PinBoard::SetInput(const vector<bool>& input, int offset) {
+    for(int i = 0; i < input.size(); i++) {
+        SetPin(offset + i, input[i]);
+    }
+}
+void PinBoard::GetOutput(vector<bool>& output, int offset) {
+    for(int i = 0; i < output.size(); i++) {
+        output[i] = GetPin(input_num + offset + i);
+    }
+}
 } // namespace pin_board

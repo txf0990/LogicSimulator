@@ -1,7 +1,18 @@
 add_library(basic_gates basic_gates.h basic_gates.cpp)
 
+add_library(chip_test_util chip_test_util.h chip_test_util.cpp)
+target_link_libraries(chip_test_util gtest)
+
 add_executable(basic_gates_test basic_gates_test.cpp)
 target_link_libraries(basic_gates_test basic_gates)
 target_link_libraries(basic_gates_test pin_board)
+#target_link_libraries(basic_gates_test chip_test_util)
 target_link_libraries(basic_gates_test gtest_main)
 add_test(basic_gates_test basic_gates_test --gtest_color=yes)
+
+add_executable(xor_gate_test xor_gate_test.cpp)
+target_link_libraries(xor_gate_test basic_gates)
+target_link_libraries(xor_gate_test pin_board)
+target_link_libraries(xor_gate_test chip_test_util)
+target_link_libraries(xor_gate_test gtest_main)
+add_test(xor_gate_test xor_gate_test --gtest_color=yes)

@@ -1,5 +1,5 @@
-#ifndef PINBOARD_H
-#define PINBOARD_H
+#ifndef PINBOARD_PINBOARD_H
+#define PINBOARD_PINBOARD_H
 
 #include <cstdint>
 #include <memory>
@@ -21,10 +21,13 @@ public:
     PinBoard& operator= (PinBoard&&) = delete;
 
     void Tick();
-    bool GetPin(PinIndex);
-    void SetPin(PinIndex, bool);
+    bool GetPin(PinIndex pin);
+    void SetPin(PinIndex pin, bool val);
     PinIndex AllocatePin();
-    void PlugChip(std::unique_ptr<chip::Chip>);
+    void PlugChip(std::unique_ptr<chip::Chip> chip);
+
+    void SetInput(const std::vector<bool>& input, int offset = 0);
+    void GetOutput(std::vector<bool>& output, int offset = 0);
 
 private:
     std::vector<int64_t> current_status;
@@ -37,4 +40,4 @@ private:
 
 } // namespace pin_board
 
-#endif // #define PINBOARD_H
+#endif // PINBOARD_PINBOARD_H

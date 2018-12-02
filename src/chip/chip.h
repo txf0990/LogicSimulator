@@ -1,5 +1,5 @@
-#ifndef CHIP_H
-#define CHIP_H
+#ifndef CHIP_CHIP_H
+#define CHIP_CHIP_H
 
 namespace pin_board {
     class PinBoard;
@@ -20,4 +20,4 @@ protected:
 
 }
 
-#endif  // #define CHIP_H
+#endif  // CHIP_CHIP_H

@@ -1,5 +1,5 @@
-#ifndef BASICGATES_H
-#define BASICGATES_H
+#ifndef CHIP_BASICGATES_H
+#define CHIP_BASICGATES_H
 
 #include <vector>
 
@@ -8,42 +8,47 @@
 
 namespace chip {
 
+using pin_board::PinIndex;
+
 class AndGate : virtual public Chip {
 public:
-    AndGate(std::vector<int> v, int t, pin_board::PinBoard* p) : input_pin(std::move(v)), output_pin(t), mother(p){
+    AndGate(std::vector<PinIndex> v, PinIndex t, pin_board::PinBoard* p) : input_pin(std::move(v)), output_pin(t), mother(p){
     }
     ~AndGate() = default;
     void Tick();
+    static void CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins);
 private:
-    std::vector<int> input_pin;
-    int output_pin;
+    std::vector<PinIndex> input_pin;
+    PinIndex output_pin;
     pin_board::PinBoard* mother;
 };
 
 class OrGate : virtual public Chip {
 public:
-    OrGate(std::vector<int> v, int t, pin_board::PinBoard* p) : input_pin(v), output_pin(t), mother(p){
+    OrGate(std::vector<PinIndex> v, PinIndex t, pin_board::PinBoard* p) : input_pin(v), output_pin(t), mother(p){
     }
     ~OrGate() = default;
     void Tick();
+    static void CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins);
 private:
-    std::vector<int> input_pin;
-    int output_pin;
+    std::vector<PinIndex> input_pin;
+    PinIndex output_pin;
     pin_board::PinBoard* mother;
 };
 
 class NotGate : virtual public Chip {
 public:
-    NotGate(int v, int t, pin_board::PinBoard* p) : input_pin(v), output_pin(t), mother(p) {
+    NotGate(PinIndex v, PinIndex t, pin_board::PinBoard* p) : input_pin(v), output_pin(t), mother(p) {
     }
     ~NotGate() = default;
     void Tick();
+    static void CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins);
 private:
-    int input_pin;
-    int output_pin;
+    PinIndex input_pin;
+    PinIndex output_pin;
     pin_board::PinBoard* mother;
 };
 
 } // namespace chip
 
-#endif  // BASICGATES_H
+#endif  // CHIP_BASICGATES_H
