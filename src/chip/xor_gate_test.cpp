@@ -37,4 +37,29 @@ TEST(NANDGateTest, Simple) {
             });
 }
 
+TEST(XorGateTest, Simple) {
+    PinBoard board(10,2,1);
+    PinIndex AND_o = board.AllocatePin();
+    PinIndex OR_o = board.AllocatePin();
+    PinIndex NOT_o = board.AllocatePin();
+    AndGate::CreateChip(board, {0,1},{AND_o});
+    OrGate::CreateChip(board, {0,1},{OR_o});
+    NotGate::CreateChip(board, {AND_o}, {NOT_o});
+    AndGate::CreateChip(board, {NOT_o, OR_o}, {2});
+    TestChipLogic(
+            board,
+            {
+                {false, false},
+                {false, true},
+                {true, false},
+                {true, true},
+            },
+            {
+                {false},
+                {true},
+                {true},
+                {false},
+            });
+}
+
 }
