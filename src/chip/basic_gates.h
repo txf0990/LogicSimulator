@@ -49,6 +49,16 @@ private:
     pin_board::PinBoard* mother;
 };
 
+class NandGate : virtual public Chip {
+public:
+    static void CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins);
+};
+    
+class XorGate : virtual public Chip {
+public:
+    static void CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins);
+};
+
 } // namespace chip
 
 #endif  // CHIP_BASICGATES_H

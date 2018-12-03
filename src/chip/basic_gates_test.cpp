@@ -14,6 +14,8 @@ using chip::Chip;
 using chip::AndGate;
 using chip::OrGate;
 using chip::NotGate;
+using chip::NandGate;
+using chip::XorGate;
 using std::vector;
 
 void InitPins(PinBoard* board, std::vector<std::pair<PinIndex, bool>> input) {
@@ -163,9 +165,7 @@ TEST(BasicGatesTest, NotGate) {
 
 TEST(BasicGatesTest, NANDGate) {
     PinBoard board(10,2,1);
-    PinIndex i = board.AllocatePin();
-    AndGate::CreateChip(board, {0,1},{i});
-    NotGate::CreateChip(board, {i}, {2});
+    NandGate::CreateChip(board, {0,1}, {2});
     TestChipLogic(
             board,
             {
@@ -184,13 +184,7 @@ TEST(BasicGatesTest, NANDGate) {
 
 TEST(BasicGatesTest, XorGate) {
     PinBoard board(10,2,1);
-    PinIndex AND_o = board.AllocatePin();
-    PinIndex OR_o = board.AllocatePin();
-    PinIndex NOT_o = board.AllocatePin();
-    AndGate::CreateChip(board, {0,1},{AND_o});
-    OrGate::CreateChip(board, {0,1},{OR_o});
-    NotGate::CreateChip(board, {AND_o}, {NOT_o});
-    AndGate::CreateChip(board, {NOT_o, OR_o}, {2});
+    XorGate::CreateChip(board, {0,1}, {2});
     TestChipLogic(
             board,
             {

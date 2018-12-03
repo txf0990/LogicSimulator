@@ -44,4 +44,23 @@ void NotGate::CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex
     std::unique_ptr<NotGate> created = std::make_unique<NotGate>(input_pins[0], output_pins[0], &mother);
     mother.PlugChip(std::move(created));
 }
+
+void NandGate::CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins) {
+   //TODO: assert output pin have size == 1.
+    PinIndex And_o = mother.AllocatePin();
+    AndGate::CreateChip(mother, input_pins, {And_o});
+    NotGate::CreateChip(mother, {And_o}, {output_pins[0]});
+}
+
+void XorGate::CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins) {
+   //TODO: assert input pin size == 2 and output pin size == 1.
+    PinIndex And_o = mother.AllocatePin();
+    PinIndex Or_o = mother.AllocatePin();
+    PinIndex Not_o = mother.AllocatePin();
+    AndGate::CreateChip(mother, input_pins, {And_o});
+    NotGate::CreateChip(mother, {And_o}, {Not_o});
+    OrGate::CreateChip(mother, input_pins, {Or_o});
+    AndGate::CreateChip(mother, {Not_o, Or_o}, {output_pins[0]});
+}
+
 }   // namespace chip
