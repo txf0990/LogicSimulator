@@ -1,3 +1,4 @@
+#include <cassert>
 #include "basic_gates.h"
 
 namespace chip {
@@ -14,7 +15,7 @@ void AndGate::Tick() {
 }
 
 void AndGate::CreateChip(PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins) {
-   //TODO: assert output pin has size == 1.
+    assert(output_pins.size() == 1);
     std::unique_ptr<AndGate> created = std::make_unique<AndGate>(input_pins, output_pins[0], &mother);
     mother.PlugChip(std::move(created));
 }
@@ -28,7 +29,7 @@ void OrGate::Tick() {
 }
 
 void OrGate::CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins) {
-   //TODO: assert output pin has size == 1.
+    assert(output_pins.size() == 1);
     std::unique_ptr<OrGate> created = std::make_unique<OrGate>(input_pins, output_pins[0], &mother);
     mother.PlugChip(std::move(created));
 
@@ -40,20 +41,20 @@ void NotGate::Tick() {
 }
 
 void NotGate::CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins) {
-   //TODO: assert both input pin and output pin have size == 1.
+    assert(input_pins.size() == 1 && output_pins.size() == 1);
     std::unique_ptr<NotGate> created = std::make_unique<NotGate>(input_pins[0], output_pins[0], &mother);
     mother.PlugChip(std::move(created));
 }
 
 void NandGate::CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins) {
-   //TODO: assert output pin have size == 1.
+    assert(output_pins.size() == 1);
     PinIndex And_o = mother.AllocatePin();
     AndGate::CreateChip(mother, input_pins, {And_o});
     NotGate::CreateChip(mother, {And_o}, {output_pins[0]});
 }
 
 void XorGate::CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins) {
-   //TODO: assert input pin size == 2 and output pin size == 1.
+    assert(input_pins.size() == 2 && output_pins.size() == 1);
     PinIndex And_o = mother.AllocatePin();
     PinIndex Or_o = mother.AllocatePin();
     PinIndex Not_o = mother.AllocatePin();
