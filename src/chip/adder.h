@@ -16,7 +16,7 @@ public:
 
 class Adder_2 : virtual public Chip {
 public:
-    static void CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins);
+    static void CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input1_pins, const std::vector<PinIndex>& input2_pins, const std::vector<PinIndex>& output_pins);
 };
 
 

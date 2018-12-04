@@ -34,9 +34,9 @@ TEST(AdderTest, TwoInput) {
             },
             {
                 {false, false},
-                {false, true},
-                {false, true},
                 {true, false},
+                {true, false},
+                {false, true},
             });
 }
 
@@ -57,19 +57,19 @@ TEST(AdderTest, ThreeInput) {
             },
             {
                 {false, false},
-                {false, true},
-                {false, true},
-                {false, true},
                 {true, false},
                 {true, false},
                 {true, false},
+                {false, true},
+                {false, true},
+                {false, true},
                 {true, true},
             });
 }
 
-TEST(Adder_2Test, Simple) {
+TEST(AdderTest, Adder_2) {
     PinBoard board(20,4,3);
-    Adder_2::CreateChip(board, {0,1,2,3}, {4,5,6});
+    Adder_2::CreateChip(board, {1,0}, {3,2}, {6,5,4});
     TestChipLogic(
             board,
             {
