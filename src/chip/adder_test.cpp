@@ -100,4 +100,23 @@ TEST(AdderTest, Adder_2_input_2_digit_carry) {
             },
             20);
 }
+
+TEST(AdderTest, Adder_2_input_4_digit_carry) {
+    PinBoard board(20,9,5);
+    Adder_2::CreateChip(board, {1,2,3,4}, {5,6,7,8}, 0, {9,10,11,12,13});
+    TestChipLogic(
+            board,
+            {
+                { {true, true, true, true, true, true, true, true, true}, NumberToPins(31,5) },
+                { {true, false, true, true, true, true, false, true, true}, NumberToPins(28,5) },
+                { {false, true, true, false, true, true, false, true, false}, NumberToPins(16,5) },
+                { {true, false, true, false, true, false, true, false, true}, NumberToPins(21,5) },
+                { {false, false, false, false, false, false, false, false, false}, NumberToPins(0,5) },
+                { {true, true, true, true, true, false, false, false, false}, NumberToPins(16,5) },
+                { {true, false, false, false, false, true, true, true, true}, NumberToPins(16,5) },
+                { {false, false, false, false, false, true, true, true, true}, NumberToPins(15,5) },
+                { {false, true, false, false, false, true, true, true, true}, NumberToPins(16,5) },
+            },
+            20);
+}
 }

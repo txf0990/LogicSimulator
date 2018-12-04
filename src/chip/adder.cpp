@@ -47,10 +47,14 @@ void Adder_2::CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex
         OrGate::CreateChip(mother, {input1_pins[0], input2_pins[0]}, {Or1_o});
         AndGate::CreateChip(mother, {Or1_o, carry_pin}, {And2_o});
         OrGate::CreateChip(mother, {And1_o,And2_o}, {output_pins[1]});
-    } else if (input1_pins.size() == 2) {
+    } else if (input1_pins.size() == 2) { 
         PinIndex Adder_o = mother.AllocatePin();
-        Adder::CreateChip(mother, {input1_pins[0], input2_pins[0], carry_pin}, {output_pins[0], Adder_o});
-        Adder::CreateChip(mother, {input1_pins[1], input2_pins[1], Adder_o}, {output_pins[1], output_pins[2]});
+        Adder_2::CreateChip(mother, {input1_pins[0]}, {input2_pins[0]}, carry_pin, {output_pins[0], Adder_o});
+        Adder_2::CreateChip(mother, {input1_pins[1]}, {input2_pins[1]}, Adder_o, {output_pins[1], output_pins[2]});
+    } else if (input1_pins.size() == 4) {
+        PinIndex Adder_o = mother.AllocatePin();
+        Adder_2::CreateChip(mother, {input1_pins[0], input1_pins[1]}, {input2_pins[0], input2_pins[1]}, carry_pin, {output_pins[0], output_pins[1], Adder_o});
+        Adder_2::CreateChip(mother, {input1_pins[2], input1_pins[3]}, {input2_pins[2], input2_pins[3]}, Adder_o, {output_pins[2], output_pins[3], output_pins[4]});
     }
 }
 
