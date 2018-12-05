@@ -85,18 +85,20 @@ TEST(AdderTest, Adder_2_input_2_digit_carry) {
 TEST(AdderTest, Adder_2_input_4_digit_carry) {
     PinBoard board(80,9,5);
     Adder_2::CreateChip(board, GetVectorPart(1,4), GetVectorPart(5,4), 0, GetVectorPart(9,5));
+    vector<int> s = {1, 4, 4}; // input sizes
+
     TestChipLogic(
             board,
             {
-                { {true, true, true, true, true, true, true, true, true}, NumberToPins(31,5) },
-                { {true, false, true, true, true, true, false, true, true}, NumberToPins(28,5) },
-                { {false, true, true, false, true, true, false, true, false}, NumberToPins(16,5) },
-                { {true, false, true, false, true, false, true, false, true}, NumberToPins(21,5) },
-                { {false, false, false, false, false, false, false, false, false}, NumberToPins(0,5) },
-                { {true, true, true, true, true, false, false, false, false}, NumberToPins(16,5) },
-                { {true, false, false, false, false, true, true, true, true}, NumberToPins(16,5) },
-                { {false, false, false, false, false, true, true, true, true}, NumberToPins(15,5) },
-                { {false, true, false, false, false, true, true, true, true}, NumberToPins(16,5) },
+                { GeneratePins({1, 15, 15}, s), NumberToPins(31, 5) },
+                { GeneratePins({1, 14, 13}, s), NumberToPins(28, 5) },
+                { GeneratePins({0, 11, 5}, s), NumberToPins(16, 5) },
+                { GeneratePins({1, 10, 10}, s), NumberToPins(21, 5) },
+                { GeneratePins({0, 0, 0}, s), NumberToPins(0, 5) },
+                { GeneratePins({1, 15, 0}, s), NumberToPins(16, 5) },
+                { GeneratePins({1, 0, 15}, s), NumberToPins(16, 5) },
+                { GeneratePins({0, 0, 15}, s), NumberToPins(15, 5) },
+                { GeneratePins({0, 1, 15}, s), NumberToPins(16, 5) },
             },
             20);
 }
@@ -104,14 +106,18 @@ TEST(AdderTest, Adder_2_input_4_digit_carry) {
 TEST(AdderTest, Adder_2_input_8_digit_carry) {
     PinBoard board(160,17,9);
     Adder_2::CreateChip(board, GetVectorPart(1,8), GetVectorPart(9,8), 0, GetVectorPart(17,9));
+    vector<int> s = {1, 8, 8}; // input sizes
     TestChipLogic(
             board,
             {
-                { {1,  1,1,1,1,1,1,1,1,  1,1,1,1,1,1,1,1}, NumberToPins(511,9) },
-                { {0,  1,1,1,1,1,1,1,1,  1,1,1,1,1,1,1,1}, NumberToPins(510,9) },
-                { {1,  0,0,0,0,0,0,0,0,  1,1,1,1,1,1,1,1}, NumberToPins(256,9) },
-                { {0,  0,0,0,0,0,0,0,0,  1,1,1,1,1,1,1,1}, NumberToPins(255,9) },
-                { {0,  0,1,1,0,1,0,1,1,  1,0,1,1,1,0,1,0}, NumberToPins(307,9) },
+                { GeneratePins({1, 255, 255}, s), NumberToPins(511, 9) },
+                { GeneratePins({0, 255, 255}, s), NumberToPins(510, 9) },
+                { GeneratePins({1, 0, 255}, s), NumberToPins(256, 9) },
+                { GeneratePins({1, 255, 0}, s), NumberToPins(256, 9) },
+                { GeneratePins({0, 1, 255}, s), NumberToPins(256, 9) },
+                { GeneratePins({0, 255, 1}, s), NumberToPins(256, 9) },
+                { GeneratePins({0, 0, 255}, s), NumberToPins(255, 9) },
+                { GeneratePins({0, 214, 93}, s), NumberToPins(307, 9) },
             },
             20);
 }
