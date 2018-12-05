@@ -1,6 +1,8 @@
 add_library(basic_gates basic_gates.h basic_gates.cpp)
 
 add_library(adder adder.h adder.cpp)
+target_link_libraries(adder basic_gates)
+target_link_libraries(adder pin_board)
 add_library(chip_test_util chip_test_util.h chip_test_util.cpp)
 
 target_link_libraries(chip_test_util gtest)
