@@ -22,6 +22,11 @@ bool TestChipLogic(
         >& input_output,
         int latency = 10);
 
-std::vector<bool> NumberToPins(int n, int size);
+std::vector<bool> NumberToPins(int number, int size);
+
+std::vector<bool> GeneratePins(
+    std::vector<int>nums,
+    std::vector<int>sizes);
+
 std::vector<pin_board::PinIndex> GetVectorPart (int begin, int length, const std::vector<pin_board::PinIndex>& v = {});
 #endif // CHIP_CHIPTESTUTIL_H

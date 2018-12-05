@@ -48,28 +48,28 @@ bool TestChipLogic(
                 << "expected_output[" << i << "][" << j << "] "
                 << "!= cal_output[" << j << "]";
         }
-        std::cout << "exp[" << i << "]:    ";
-        for(int j = 0; j < input_output[i].second.size(); j++) {
-            std::cout << input_output[i].second[j];
-            if (j != input_output[i].second.size() - 1) std::cout << " ";
-            else std::cout << std::endl;
-        }
-        std::cout << "cal[" << i << "]:    ";
-        for(int j = 0; j < cal_output.size(); j++) {
-            std::cout << cal_output[j];
-            if (j != cal_output.size() - 1) std::cout << " ";
-            else std::cout << std::endl;
-        }
-        std::cout << "~~~" << std::endl;
     }
 
     return true;
 }
 
-vector<bool> NumberToPins(int n, int size) {
-    vector<bool> result;
+void AppendPinsByNumber(vector<bool>& array, int number, int size) {
     for(int i = 0; i < size; i++) {
-        result.push_back(n & (1 << i));
+        array.push_back(static_cast<bool>(number & (1 << i)));
+    }
+}
+
+vector<bool> NumberToPins(int number, int size) {
+    vector<bool> result;
+    AppendPinsByNumber(result, number, size);
+    return result;
+}
+
+vector<bool> GeneratePins(vector<int>nums, vector<int>sizes) {
+    vector<bool> result;
+    assert(nums.size() == sizes.size());
+    for (int i = 0; i < nums.size(); i++) {
+        AppendPinsByNumber(result, nums[i], sizes[i]);
     }
     return result;
 }

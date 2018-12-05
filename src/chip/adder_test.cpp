@@ -19,6 +19,7 @@ using chip::NandGate;
 using chip::XorGate;
 using chip::Adder;
 using chip::Adder_2;
+using std::pair;
 using std::vector;
 
 TEST(AdderTest, TwoInput) {
@@ -43,17 +44,19 @@ TEST(AdderTest, TwoInput) {
 TEST(AdderTest, Adder_2_input_1_digit_carry) {
     PinBoard board(20,3,2);
     Adder_2::CreateChip(board, {1}, {2}, 0, {3,4});
+    vector<int> s = {1, 1, 1}; // input sizes
+
     TestChipLogic(
             board,
             {
-                { {false, false, false}, NumberToPins(0,2) },
-                { {false, false, true}, NumberToPins(1,2) },
-                { {false, true, false}, NumberToPins(1,2) },
-                { {true, false, false}, NumberToPins(1,2) },
-                { {false, true, true}, NumberToPins(2,2) },
-                { {true, false, true}, NumberToPins(2,2) },
-                { {true, true, false}, NumberToPins(2,2) },
-                { {true, true, true}, NumberToPins(3,2) },
+                { GeneratePins({0, 0, 0}, s), NumberToPins(0,2) },
+                { GeneratePins({0, 0, 1}, s), NumberToPins(1,2) },
+                { GeneratePins({0, 1, 0}, s), NumberToPins(1,2) },
+                { GeneratePins({1, 0, 0}, s), NumberToPins(1,2) },
+                { GeneratePins({0, 1, 1}, s), NumberToPins(2,2) },
+                { GeneratePins({1, 0, 1}, s), NumberToPins(2,2) },
+                { GeneratePins({1, 1, 0}, s), NumberToPins(2,2) },
+                { GeneratePins({1, 1, 1}, s), NumberToPins(3,2) },
             }
             );
 }
@@ -61,44 +64,22 @@ TEST(AdderTest, Adder_2_input_1_digit_carry) {
 TEST(AdderTest, Adder_2_input_2_digit_carry) {
     PinBoard board(40,5,3);
     Adder_2::CreateChip(board, {1,2}, {3,4}, 0, {5,6,7});
-    TestChipLogic(
-            board,
-            {
-                { {false, false, false, false, false}, NumberToPins(0, 3) },
-                { {false, false, false, true, false}, NumberToPins(1, 3) },
-                { {false, false, false, false, true}, NumberToPins(2, 3) },
-                { {false, false, false, true, true}, NumberToPins(3, 3) },
-                { {false, true, false, false, false}, NumberToPins(1, 3) },
-                { {false, true, false, true, false}, NumberToPins(2, 3) },
-                { {false, true, false, false, true}, NumberToPins(3, 3) },
-                { {false, true, false, true, true}, NumberToPins(4, 3) },
-                { {false, false, true, false, false}, NumberToPins(2, 3) },
-                { {false, false, true, true, false}, NumberToPins(3, 3) },
-                { {false, false, true, false, true}, NumberToPins(4, 3) },
-                { {false, false, true, true, true}, NumberToPins(5, 3) },
-                { {false, true, true, false, false}, NumberToPins(3, 3) },
-                { {false, true, true, true, false}, NumberToPins(4, 3) },
-                { {false, true, true, false, true}, NumberToPins(5, 3) },
-                { {false, true, true, true, true}, NumberToPins(6, 3) },
+    vector<int> s = {1, 2, 2}; // input sizes
 
-                { {true, false, false, false, false}, NumberToPins(1, 3) },
-                { {true, false, false, true, false}, NumberToPins(2, 3) },
-                { {true, false, false, false, true}, NumberToPins(3, 3) },
-                { {true, false, false, true, true}, NumberToPins(4, 3) },
-                { {true, true, false, false, false}, NumberToPins(2, 3) },
-                { {true, true, false, true, false}, NumberToPins(3, 3) },
-                { {true, true, false, false, true}, NumberToPins(4, 3) },
-                { {true, true, false, true, true}, NumberToPins(5, 3) },
-                { {true, false, true, false, false}, NumberToPins(3, 3) },
-                { {true, false, true, true, false}, NumberToPins(4, 3) },
-                { {true, false, true, false, true}, NumberToPins(5, 3) },
-                { {true, false, true, true, true}, NumberToPins(6, 3) },
-                { {true, true, true, false, false}, NumberToPins(4, 3) },
-                { {true, true, true, true, false}, NumberToPins(5, 3) },
-                { {true, true, true, false, true}, NumberToPins(6, 3) },
-                { {true, true, true, true, true}, NumberToPins(7, 3) },
-            },
-            20);
+    vector<pair<vector<bool>, vector<bool>>> test_cases;
+
+    for (int carry = 0; carry <= 1; carry++) {
+      for (int n1 = 0; n1 <= 3; n1++) {
+        for (int n2 = 0; n2 <= 3; n2++) {
+          test_cases.push_back({
+              GeneratePins({carry, n1, n2}, s),
+              NumberToPins(carry + n1 + n2, 3)
+          });
+        }
+      }
+    }
+
+    TestChipLogic(board, test_cases, 20);
 }
 
 TEST(AdderTest, Adder_2_input_4_digit_carry) {
