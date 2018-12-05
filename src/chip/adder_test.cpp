@@ -1,11 +1,11 @@
+#include "chip/adder.h"
+
+#include <memory>
+#include <vector>
+
 #include "gtest/gtest.h"
 #include "chip/basic_gates.h"
 #include "chip/chip_test_util.h"
-#include "chip/adder.h"
-
-//#include <utility>
-#include <memory>
-#include <vector>
 
 namespace {
 
