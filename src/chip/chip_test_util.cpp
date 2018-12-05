@@ -2,6 +2,7 @@
 #include "chip/chip_test_util.h"
 #include "pin_board/pin_board.h"
 
+using pin_board::PinIndex;
 using pin_board::PinBoard;
 using std::vector;
 
@@ -47,7 +48,21 @@ bool TestChipLogic(
                 << "expected_output[" << i << "][" << j << "] "
                 << "!= cal_output[" << j << "]";
         }
+        std::cout << "exp[" << i << "]:    ";
+        for(int j = 0; j < input_output[i].second.size(); j++) {
+            std::cout << input_output[i].second[j];
+            if (j != input_output[i].second.size() - 1) std::cout << " ";
+            else std::cout << std::endl;
+        }
+        std::cout << "cal[" << i << "]:    ";
+        for(int j = 0; j < cal_output.size(); j++) {
+            std::cout << cal_output[j];
+            if (j != cal_output.size() - 1) std::cout << " ";
+            else std::cout << std::endl;
+        }
+        std::cout << "~~~" << std::endl;
     }
+
     return true;
 }
 
@@ -58,3 +73,18 @@ vector<bool> NumberToPins(int n, int size) {
     }
     return result;
 }
+
+vector<PinIndex> GetVectorPart (int begin, int length, const vector<PinIndex>& v) {
+    vector<PinIndex> result;
+    if (!v.empty()) {
+        for(int i = begin; i < begin + length; i++) {
+            result.push_back(v[i]);
+        }
+    } else {
+        for(int i = begin; i < begin + length; i++) {
+            result.push_back(i);
+        }
+    }
+    return result;
+};
+
