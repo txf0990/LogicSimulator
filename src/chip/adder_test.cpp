@@ -41,7 +41,7 @@ TEST(AdderTest, TwoInput) {
 }
 
 TEST(AdderTest, Adder_2_input_1_digit_carry) {
-    PinBoard board(10,3,2);
+    PinBoard board(20,3,2);
     Adder_2::CreateChip(board, {1}, {2}, 0, {3,4});
     TestChipLogic(
             board,
@@ -59,7 +59,7 @@ TEST(AdderTest, Adder_2_input_1_digit_carry) {
 }
 
 TEST(AdderTest, Adder_2_input_2_digit_carry) {
-    PinBoard board(20,5,3);
+    PinBoard board(40,5,3);
     Adder_2::CreateChip(board, {1,2}, {3,4}, 0, {5,6,7});
     TestChipLogic(
             board,
@@ -102,7 +102,7 @@ TEST(AdderTest, Adder_2_input_2_digit_carry) {
 }
 
 TEST(AdderTest, Adder_2_input_4_digit_carry) {
-    PinBoard board(20,9,5);
+    PinBoard board(80,9,5);
     Adder_2::CreateChip(board, GetVectorPart(1,4), GetVectorPart(5,4), 0, GetVectorPart(9,5));
     TestChipLogic(
             board,
@@ -121,7 +121,7 @@ TEST(AdderTest, Adder_2_input_4_digit_carry) {
 }
 
 TEST(AdderTest, Adder_2_input_8_digit_carry) {
-    PinBoard board(30,17,9);
+    PinBoard board(160,17,9);
     Adder_2::CreateChip(board, GetVectorPart(1,8), GetVectorPart(9,8), 0, GetVectorPart(17,9));
     TestChipLogic(
             board,
@@ -136,7 +136,7 @@ TEST(AdderTest, Adder_2_input_8_digit_carry) {
 }
 
 TEST(AdderTest, Adder_2_input_16_digit_carry) {
-    PinBoard board(100,33,17);
+    PinBoard board(320,33,17);
     Adder_2::CreateChip(board, GetVectorPart(1,16), GetVectorPart(17,16), 0, GetVectorPart(33,17));
     TestChipLogic(
             board,
