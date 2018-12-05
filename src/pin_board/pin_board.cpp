@@ -1,5 +1,6 @@
 #include "pin_board/pin_board.h"
 
+#include <cassert>
 #include <iostream>
 
 using std::vector;
@@ -37,7 +38,7 @@ void PinBoard::SetPin(PinIndex n, bool result) {
 
 PinIndex PinBoard::AllocatePin() {
     allocated_pin++;
-    assert(allocate_pin < total_pin_num);
+    assert(allocated_pin < total_pin_num);
     return allocated_pin - 1;
 }
 
