@@ -34,6 +34,7 @@ private:
     std::vector<int64_t> next_status;
     PinIndex input_num = 0;
     PinIndex output_num = 0;
+    PinIndex total_pin_num = 0;
     PinIndex allocated_pin = 0;
     std::vector<std::unique_ptr<chip::Chip>> chips;
 };

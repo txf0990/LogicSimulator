@@ -8,7 +8,10 @@ namespace pin_board {
 
 PinBoard::PinBoard(PinIndex n, PinIndex x, PinIndex y)
     : current_status((n + 63) / 64),
-      next_status((n + 63) / 64), input_num(x), output_num(y), allocated_pin(x + y){
+      next_status((n + 63) / 64),
+      input_num(x), output_num(y),
+      total_pin_num(n),
+      allocated_pin(x + y){
       }
 
 void PinBoard::Tick() {
@@ -34,6 +37,7 @@ void PinBoard::SetPin(PinIndex n, bool result) {
 
 PinIndex PinBoard::AllocatePin() {
     allocated_pin++;
+    assert(allocate_pin < total_pin_num);
     return allocated_pin - 1;
 }
 
