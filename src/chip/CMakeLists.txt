@@ -1,10 +1,13 @@
 add_library(basic_gates basic_gates.h basic_gates.cpp)
-
 add_library(adder adder.h adder.cpp)
 target_link_libraries(adder basic_gates)
 target_link_libraries(adder pin_board)
-add_library(chip_test_util chip_test_util.h chip_test_util.cpp)
 
+add_library(mux mux.h mux.cpp)
+target_link_libraries(mux basic_gates)
+target_link_libraries(mux pin_board)
+
+add_library(chip_test_util chip_test_util.h chip_test_util.cpp)
 target_link_libraries(chip_test_util gtest)
 
 add_executable(basic_gates_test basic_gates_test.cpp)
@@ -28,3 +31,11 @@ target_link_libraries(adder_test adder)
 target_link_libraries(adder_test gtest_main)
 target_link_libraries(adder_test chip_test_util)
 add_test(adder_test adder_test --gtest_color=yes)
+
+add_executable(mux_test mux_test.cpp)
+target_link_libraries(mux_test basic_gates)
+target_link_libraries(mux_test pin_board)
+target_link_libraries(mux_test mux)
+target_link_libraries(mux_test gtest_main)
+target_link_libraries(mux_test chip_test_util)
+add_test(mux_test mux_test --gtest_color=yes)
