@@ -1,6 +1,7 @@
 #ifndef CHIP_LOGIC_CAL_H
 #define CHIP_LOGIC_CAL_H
 
+#include <cassert>
 #include <vector>
 
 #include "chip/chip.h"
@@ -18,13 +19,19 @@ public:
             );
 };
 
-class BitAnd : virtual public Chip {
+template<typename ChipType> class BitwiseChip {
 public:
     static void CreateChip(
             pin_board::PinBoard& mother,
             const std::vector<PinIndex>& input1_pins,
             const std::vector<PinIndex>& input2_pins,
-            const std::vector<PinIndex>& output_pins);
+            const std::vector<PinIndex>& output_pins) {
+        assert(input1_pins.size() == input2_pins.size());
+        assert(input1_pins.size() == output_pins.size());
+        for(int i = 0; i < input1_pins.size(); i++) {
+            ChipType::CreateChip(mother, {input1_pins[i], input2_pins[i]}, {output_pins[i]});
+        }
+    }
 };
 
 }   // namespace chip
