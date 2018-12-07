@@ -53,6 +53,13 @@ void NandGate::CreateChip(pin_board::PinBoard& mother, const std::vector<PinInde
     NotGate::CreateChip(mother, {And_o}, {output_pins[0]});
 }
 
+void NorGate::CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins) {
+    assert(output_pins.size() == 1);
+    PinIndex Or_o = mother.AllocatePin();
+    OrGate::CreateChip(mother, input_pins, {Or_o});
+    NotGate::CreateChip(mother, {Or_o}, output_pins);
+}
+
 void XorGate::CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input_pins, const std::vector<PinIndex>& output_pins) {
     assert(input_pins.size() == 2 && output_pins.size() == 1);
     PinIndex And_o = mother.AllocatePin();

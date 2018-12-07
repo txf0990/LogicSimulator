@@ -79,6 +79,23 @@ TEST(BitwiseChipTest, BitOr) {
     TestChipLogic(mother, test_cases, 100);
 }
 
+TEST(BitwiseChipTest, BitNor) {
+    PinBoard mother(100,16,8);
+    BitwiseChip<chip::NorGate>::CreateChip(
+            mother,
+            GetVectorPart(0,8),
+            GetVectorPart(8,8),
+            GetVectorPart(16,8)
+            );
+    vector<pair<vector<bool>, vector<bool>>> test_cases;
+    for(int i = 0; i < (1 << 8); i++) {
+        for(int j = 0; j < (1 << 8); j++) {
+            test_cases.push_back({GenerateTwoNums(i,j,8), NumberToPins(~(i | j),8)});
+        }
+    }
+    TestChipLogic(mother, test_cases, 100);
+}
+
 TEST(BitwiseChipTest, BitXor) {
     PinBoard mother(100,16,8);
     BitwiseChip<chip::XorGate>::CreateChip(

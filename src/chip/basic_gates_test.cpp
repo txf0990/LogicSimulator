@@ -15,6 +15,7 @@ using chip::AndGate;
 using chip::OrGate;
 using chip::NotGate;
 using chip::NandGate;
+using chip::NorGate;
 using chip::XorGate;
 using std::vector;
 
@@ -163,7 +164,7 @@ TEST(BasicGatesTest, NotGate) {
     EXPECT_EQ(true, board->GetPin(3));
 }
 
-TEST(BasicGatesTest, NANDGate) {
+TEST(BasicGatesTest, NandGate) {
     PinBoard board(10,2,1);
     NandGate::CreateChip(board, {0,1}, {2});
     TestChipLogic(
@@ -178,6 +179,25 @@ TEST(BasicGatesTest, NANDGate) {
                 {true},
                 {true},
                 {true},
+                {false},
+            });
+}
+
+TEST(BasicGatesTest, NorGate) {
+    PinBoard board(10,2,1);
+    NorGate::CreateChip(board, {0,1}, {2});
+    TestChipLogic(
+            board,
+            {
+                {false, false},
+                {false, true},
+                {true, false},
+                {true, true},
+            },
+            {
+                {true},
+                {false},
+                {false},
                 {false},
             });
 }
