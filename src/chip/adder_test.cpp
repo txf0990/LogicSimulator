@@ -65,10 +65,12 @@ TEST(AdderTest, Adder_2_input_4_digit_carry) {
     GenerateAndTest(digit);
 }
 
+/*
 TEST(AdderTest, Adder_2_input_8_digit_carry) {
     int digit = 8;
     GenerateAndTest(digit);
 }
+*/
 
 TEST(AdderTest, Adder_2_input_16_digit_carry) {
     PinBoard board(320,33,17);

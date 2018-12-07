@@ -49,10 +49,12 @@ TEST(MuxTest, Mux_2_input_4_digit) {
     GenerateAndTest(digit);
 }
 
+/*
 TEST(MuxTest, Mux_2_input_8_digit) {
     int digit = 8;
     GenerateAndTest(digit);
 }
+*/
 
 
 }   // namespace
