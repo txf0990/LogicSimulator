@@ -17,7 +17,12 @@ using std::vector;
 
 void GenerateAndTest(int digit) {
     PinBoard board(digit * 10, 1 + 2 * digit, digit);
-    Mux::CreateChip(board, GetVectorPart(1, digit), GetVectorPart(digit + 1, digit), 0, GetVectorPart(2 * digit + 1, digit));
+    Mux::CreateChip(
+        board,
+        GetVectorPart(board.input_offset + 1, digit),
+        GetVectorPart(board.input_offset + digit + 1, digit),
+        board.input_offset,
+        GetVectorPart(board.output_offset, digit));
     vector<pair<vector<bool>, vector<bool>>> test_cases;
     vector<int> s = {1, digit, digit};      // input sizes: select_pin, input1, input2.
     for(int select = 0; select <= 1; select++) {
