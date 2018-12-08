@@ -28,7 +28,8 @@ public:
 
     void SetInput(const std::vector<bool>& input, int offset = 0);
     void GetOutput(std::vector<bool>& output, int offset = 0);
-
+    PinIndex GetZeroPin() {return total_pin_num - 2;}
+    PinIndex GetOnePin() {return total_pin_num - 1;}
 private:
     std::vector<int64_t> current_status;
     std::vector<int64_t> next_status;

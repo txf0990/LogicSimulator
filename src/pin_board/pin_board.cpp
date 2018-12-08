@@ -8,14 +8,16 @@ using std::vector;
 namespace pin_board {
 
 PinBoard::PinBoard(PinIndex n, PinIndex x, PinIndex y)
-    : current_status((n + 63) / 64),
-      next_status((n + 63) / 64),
+    : current_status((n + 2 + 63) / 64),
+      next_status((n + 2 + 63) / 64),
       input_num(x), output_num(y),
-      total_pin_num(n),
+      total_pin_num(n + 2),
       allocated_pin(x + y){
       }
 
 void PinBoard::Tick() {
+    current_status[GetZeroPin()] = 0;
+    current_status[GetOnePin()] = 1;
     for(int i = 0; i < chips.size(); i++) {
         chips[i]->Tick();
     }
