@@ -9,24 +9,23 @@
 
 namespace chip {
 
+class LeftShifter32 : virtual public Chip {
+public:
+    static void CreateChip(
+            pin_board::PinBoard& mother,
+            const std::vector<PinIndex>& input_pins,
+            std::vector<PinIndex> shamt,
+            const std::vector<PinIndex>& output_pins);
+};
+
 class LeftShifter : virtual public Chip {
 public:
     static void CreateChip(
             pin_board::PinBoard& mother,
             const std::vector<PinIndex>& input_pins,
-            const std::vector<PinIndex>& output_pins,
-            vector<PinIndex> diff_bit,
-            vector<PinIndex> if_shift);
-};
-
-class LeftShifterBit : virtual public Chip {
-public:
-    static void CreateChip(
-            pin_board::PinBoard& mother,
-            const std::vector<PinIndex>& input_pins,
-            const std::vector<PinIndex>& output_pins,
-            int diff_bit,
-            vector<PinIndex> if_shift);
+            int shift_num,
+            PinIndex if_shift,
+            const std::vector<PinIndex>& output_pins);    // select_pin=1: select shifted. select_pin=0: select origin
 };
 
 }   // namespace chip

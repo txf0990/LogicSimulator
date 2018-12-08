@@ -12,6 +12,11 @@ add_library(logic_cal logic_cal.h logic_cal.cpp)
 target_link_libraries(logic_cal basic_gates)
 target_link_libraries(logic_cal pin_board)
 
+add_library(left_shifter left_shifter.h left_shifter.cpp)
+target_link_libraries(left_shifter basic_gates)
+target_link_libraries(left_shifter pin_board)
+target_link_libraries(left_shifter mux)
+
 add_library(chip_test_util chip_test_util.h chip_test_util.cpp)
 target_link_libraries(chip_test_util gtest)
 
@@ -52,3 +57,11 @@ target_link_libraries(logic_cal_test logic_cal)
 target_link_libraries(logic_cal_test gtest_main)
 target_link_libraries(logic_cal_test chip_test_util)
 add_test(logic_cal_test logic_cal_test --gtest_color=yes)
+
+add_executable(left_shifter_test left_shifter_test.cpp)
+target_link_libraries(left_shifter_test basic_gates)
+target_link_libraries(left_shifter_test pin_board)
+target_link_libraries(left_shifter_test left_shifter)
+target_link_libraries(left_shifter_test gtest_main)
+target_link_libraries(left_shifter_test chip_test_util)
+add_test(left_shifter_test left_shifter_test --gtest_color=yes)

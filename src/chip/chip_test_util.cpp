@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "gtest/gtest.h"
 #include "chip/chip_test_util.h"
 #include "pin_board/pin_board.h"

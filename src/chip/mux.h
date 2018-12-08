@@ -16,7 +16,7 @@ public:
             const std::vector<PinIndex>& input1_pins,
             const std::vector<PinIndex>& input2_pins,
             const PinIndex select_pin,
-            const std::vector<PinIndex>& output_pins);
+            const std::vector<PinIndex>& output_pins);  // select_pin = 1: select second input; select_pin = 2: select first input;
 };
 
 

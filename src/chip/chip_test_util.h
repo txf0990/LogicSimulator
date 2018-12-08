@@ -1,6 +1,7 @@
 #ifndef CHIP_CHIPTESTUTIL_H
 #define CHIP_CHIPTESTUTIL_H
 
+#include <iostream>
 #include <vector>
 #include "chip/chip.h"
 #include "pin_board/pin_board.h"
@@ -29,4 +30,5 @@ std::vector<bool> GeneratePins(
     std::vector<int>sizes);
 
 std::vector<pin_board::PinIndex> GetVectorPart (int begin, int length, const std::vector<pin_board::PinIndex>& v = {});
+
 #endif // CHIP_CHIPTESTUTIL_H
