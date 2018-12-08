@@ -46,68 +46,68 @@ TEST(BitwiseChipTest, BitNot) {
 }
 
 TEST(BitwiseChipTest, BitAnd) {
-    PinBoard mother(100,16,8);
+    PinBoard mother(100,8,4);
     BitwiseChip<chip::AndGate>::CreateChip(
             mother,
-            GetVectorPart(0,8),
-            GetVectorPart(8,8),
-            GetVectorPart(16,8)
+            GetVectorPart(0,4),
+            GetVectorPart(4,4),
+            GetVectorPart(8,4)
             );
     vector<pair<vector<bool>, vector<bool>>> test_cases;
-    for(int i = 0; i < (1 << 8); i++) {
-        for(int j = 0; j < (1 << 8); j++) {
-            test_cases.push_back({GenerateTwoNums(i,j,8), NumberToPins(i & j,8)});
+    for(int i = 0; i < (1 << 4); i++) {
+        for(int j = 0; j < (1 << 4); j++) {
+            test_cases.push_back({GenerateTwoNums(i,j,4), NumberToPins(i & j,4)});
         }
     }
     TestChipLogic(mother, test_cases, 100);
 }
 
 TEST(BitwiseChipTest, BitOr) {
-    PinBoard mother(100,16,8);
+    PinBoard mother(100,8,4);
     BitwiseChip<chip::OrGate>::CreateChip(
             mother,
-            GetVectorPart(0,8),
-            GetVectorPart(8,8),
-            GetVectorPart(16,8)
+            GetVectorPart(0,4),
+            GetVectorPart(4,4),
+            GetVectorPart(8,4)
             );
     vector<pair<vector<bool>, vector<bool>>> test_cases;
-    for(int i = 0; i < (1 << 8); i++) {
-        for(int j = 0; j < (1 << 8); j++) {
-            test_cases.push_back({GenerateTwoNums(i,j,8), NumberToPins(i | j,8)});
+    for(int i = 0; i < (1 << 4); i++) {
+        for(int j = 0; j < (1 << 4); j++) {
+            test_cases.push_back({GenerateTwoNums(i,j,4), NumberToPins(i | j,4)});
         }
     }
     TestChipLogic(mother, test_cases, 100);
 }
 
 TEST(BitwiseChipTest, BitNor) {
-    PinBoard mother(100,16,8);
+    PinBoard mother(100,8,4);
     BitwiseChip<chip::NorGate>::CreateChip(
             mother,
-            GetVectorPart(0,8),
-            GetVectorPart(8,8),
-            GetVectorPart(16,8)
+            GetVectorPart(0,4),
+            GetVectorPart(4,4),
+            GetVectorPart(8,4)
             );
     vector<pair<vector<bool>, vector<bool>>> test_cases;
-    for(int i = 0; i < (1 << 8); i++) {
-        for(int j = 0; j < (1 << 8); j++) {
-            test_cases.push_back({GenerateTwoNums(i,j,8), NumberToPins(~(i | j),8)});
+    for(int i = 0; i < (1 << 4); i++) {
+        for(int j = 0; j < (1 << 4); j++) {
+            test_cases.push_back({GenerateTwoNums(i,j,4), NumberToPins(~(i | j),4)});
         }
     }
     TestChipLogic(mother, test_cases, 100);
 }
 
 TEST(BitwiseChipTest, BitXor) {
-    PinBoard mother(100,16,8);
+    PinBoard mother(100,8,4);
     BitwiseChip<chip::XorGate>::CreateChip(
             mother,
-            GetVectorPart(0,8),
-            GetVectorPart(8,8),
-            GetVectorPart(16,8)
+            GetVectorPart(0,4),
+            GetVectorPart(4,4),
+            GetVectorPart(8,4)
             );
     vector<pair<vector<bool>, vector<bool>>> test_cases;
-    for(int i = 0; i < (1 << 8); i++) {
-        for(int j = 0; j < (1 << 8); j++) {
-            test_cases.push_back({GenerateTwoNums(i,j,8), NumberToPins(i ^ j,8)});
+    for(int i = 0; i < (1 << 4); i++) {
+        for(int j = 0; j < (1 << 4); j++) {
+            test_cases.push_back({GenerateTwoNums(i,j,4), NumberToPins(i ^ j,4)});
         }
     }
     TestChipLogic(mother, test_cases, 100);
