@@ -11,7 +11,6 @@ namespace {
 
 using pin_board::PinBoard;
 using pin_board::PinIndex;
-using chip::Adder;
 using chip::Adder_2;
 using std::pair;
 using std::vector;
