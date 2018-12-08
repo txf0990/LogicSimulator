@@ -10,7 +10,7 @@ TEST(PinBoardTest, Simple) {
 
     EXPECT_EQ(8, sizeof(int64_t));
 
-    board.SetPin(0, true);
+    board.SetPin(2, true);
     board.SetPin(51, false);
     board.SetPin(102, true);
     board.SetPin(153, false);
@@ -18,7 +18,7 @@ TEST(PinBoardTest, Simple) {
 
     board.Tick();
 
-    EXPECT_EQ(true, board.GetPin(0));
+    EXPECT_EQ(true, board.GetPin(2));
     EXPECT_EQ(false, board.GetPin(51));
     EXPECT_EQ(true, board.GetPin(102));
     EXPECT_EQ(false, board.GetPin(153));

@@ -27,8 +27,8 @@ public:
 
     void SetInput(const std::vector<bool>& input, int offset = 0);
     void GetOutput(std::vector<bool>& output, int offset = 0);
-    PinIndex GetZeroPin() {return total_pin_num - 2;}
-    PinIndex GetOnePin() {return total_pin_num - 1;}
+    PinIndex GetZeroPin() {return 0;}
+    PinIndex GetOnePin() {return 1;}
 
     const PinIndex input_offset;
     const PinIndex output_offset;

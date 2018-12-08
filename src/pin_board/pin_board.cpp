@@ -8,14 +8,14 @@ using std::vector;
 namespace pin_board {
 
 PinBoard::PinBoard(PinIndex n, PinIndex x, PinIndex y)
-    : input_offset(0),
-      output_offset(x),
-      free_pin_offset(x + y),
-      current_status((n + 2 + 63) / 64),
-      next_status((n + 2 + 63) / 64),
+    : input_offset(2),
+      output_offset(2 + x),
+      free_pin_offset(2 + x + y),
+      current_status((2 + n + 63) / 64),
+      next_status((2 + n + 63) / 64),
       input_num(x), output_num(y),
       total_pin_num(n + 2),
-      allocated_pin(x + y){
+      allocated_pin(2 + x + y){
       }
 
 void PinBoard::Tick() {
