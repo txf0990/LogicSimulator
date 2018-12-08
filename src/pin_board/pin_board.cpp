@@ -16,8 +16,9 @@ PinBoard::PinBoard(PinIndex n, PinIndex x, PinIndex y)
       }
 
 void PinBoard::Tick() {
-    current_status[GetZeroPin()] = 0;
-    current_status[GetOnePin()] = 1;
+
+    SetPin(GetZeroPin(), false);
+    SetPin(GetOnePin(), true);
     for(int i = 0; i < chips.size(); i++) {
         chips[i]->Tick();
     }
@@ -30,6 +31,14 @@ bool PinBoard::GetPin(PinIndex n){
     return current_status[n/64] & (static_cast<int64_t>(1) << (n % 64));
 }
 
+void PinBoard::SetCurrentPin(PinIndex n, bool result) {
+    if (result) {
+        current_status[n/64] |= (static_cast<int64_t>(1) << (n % 64));
+    } else {
+        current_status[n/64] &= ~(static_cast<int64_t>(1) << (n % 64));
+    }
+}
+
 void PinBoard::SetPin(PinIndex n, bool result) {
     if (result) {
         next_status[n/64] |= (static_cast<int64_t>(1) << (n % 64));
@@ -40,7 +49,7 @@ void PinBoard::SetPin(PinIndex n, bool result) {
 
 PinIndex PinBoard::AllocatePin() {
     allocated_pin++;
-    assert(allocated_pin < total_pin_num);
+    assert(allocated_pin < total_pin_num - 2);
     return allocated_pin - 1;
 }
 

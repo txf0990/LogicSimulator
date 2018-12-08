@@ -31,6 +31,9 @@ public:
     PinIndex GetZeroPin() {return total_pin_num - 2;}
     PinIndex GetOnePin() {return total_pin_num - 1;}
 private:
+    // Used for ZeroPin and OnePin
+    void SetCurrentPin(PinIndex pin, bool val);
+
     std::vector<int64_t> current_status;
     std::vector<int64_t> next_status;
     PinIndex input_num = 0;
