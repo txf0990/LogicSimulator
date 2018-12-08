@@ -29,9 +29,9 @@ void GenerateAndTest(int digit) {
         for(int n1 = 0; n1 < (1 << digit); n1++) {
             for(int n2 = 0; n2 < (1 << digit); n2++) {
                 if (select == 0) {
-                    test_cases.push_back({GeneratePins({select, n1, n2}, s), NumberToPins(n2,digit)});
-                } else {
                     test_cases.push_back({GeneratePins({select, n1, n2}, s), NumberToPins(n1,digit)});
+                } else {
+                    test_cases.push_back({GeneratePins({select, n1, n2}, s), NumberToPins(n2,digit)});
                 }
             }
         }

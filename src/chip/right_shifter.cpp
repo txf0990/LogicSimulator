@@ -50,7 +50,7 @@ void RightShifter::CreateChip(
   for(int i = 0; i < input_pins.size() - shift_num; i++) {
     shifted_result[i] = input_pins[i + shift_num];
   }
-  Mux::CreateChip(mother, shifted_result, input_pins, if_shift, output_pins);
+  Mux::CreateChip(mother, input_pins, shifted_result, if_shift, output_pins);
 }
 
 } // namespace chip

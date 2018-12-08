@@ -47,6 +47,6 @@ void LeftShifter::CreateChip(
   for(int i = shift_num; i < input_pins.size(); i++) {
     shift[i] = input_pins[i - shift_num];
   }
-  Mux::CreateChip(mother, shift, input_pins, if_shift, output_pins);
+  Mux::CreateChip(mother, input_pins, shift, if_shift, output_pins);
 }
 } // namespace chip

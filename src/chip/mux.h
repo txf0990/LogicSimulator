@@ -12,9 +12,9 @@ namespace chip {
 class Mux : virtual public Chip {
 public:
     static void CreateChip(
-            pin_board::PinBoard& mother,
+            pin_board::PinBoard& board,
+            const std::vector<pin_board::PinIndex>& input0_pins,
             const std::vector<pin_board::PinIndex>& input1_pins,
-            const std::vector<pin_board::PinIndex>& input2_pins,
             const pin_board::PinIndex select_pin,
             const std::vector<pin_board::PinIndex>& output_pins);  // select_pin = 1: select second input; select_pin = 2: select first input;
 };
