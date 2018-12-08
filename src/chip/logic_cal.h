@@ -10,12 +10,12 @@
 
 namespace chip {
 
-class BitNot : virtual public Chip {
+class BitNot : public Chip {
 public:
     static void CreateChip(
             pin_board::PinBoard& mother,
-            const std::vector<PinIndex>& input_pins,
-            const std::vector<PinIndex>& output_pins
+            const std::vector<pin_board::PinIndex>& input_pins,
+            const std::vector<pin_board::PinIndex>& output_pins
             );
 };
 
@@ -23,9 +23,9 @@ template<typename ChipType> class BitwiseChip {
 public:
     static void CreateChip(
             pin_board::PinBoard& mother,
-            const std::vector<PinIndex>& input1_pins,
-            const std::vector<PinIndex>& input2_pins,
-            const std::vector<PinIndex>& output_pins) {
+            const std::vector<pin_board::PinIndex>& input1_pins,
+            const std::vector<pin_board::PinIndex>& input2_pins,
+            const std::vector<pin_board::PinIndex>& output_pins) {
         assert(input1_pins.size() == input2_pins.size());
         assert(input1_pins.size() == output_pins.size());
         for(int i = 0; i < input1_pins.size(); i++) {

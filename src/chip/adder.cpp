@@ -1,9 +1,13 @@
+#include "chip/adder.h"
+
+#include "chip/basic_gates.h"
+#include "chip/chip_test_util.h"
+
 #include <cassert>
-#include "basic_gates.h"
-#include "adder.h"
-#include "chip_test_util.h"
 
 namespace chip {
+
+using pin_board::PinIndex;
 
 void Adder_2::CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input1_pins, const std::vector<PinIndex>& input2_pins, const PinIndex carry_pin, const std::vector<PinIndex>& output_pins) {
     assert(input1_pins.size() == input2_pins.size());

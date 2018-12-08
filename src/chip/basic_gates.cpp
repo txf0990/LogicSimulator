@@ -4,6 +4,7 @@
 namespace chip {
 
 using std::vector;
+using pin_board::PinIndex;
 using pin_board::PinBoard;
 
 void AndGate::Tick() {

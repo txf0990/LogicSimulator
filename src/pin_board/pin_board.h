@@ -1,12 +1,12 @@
 #ifndef PINBOARD_PINBOARD_H
 #define PINBOARD_PINBOARD_H
 
+#include "pin_board/pin.h"
+#include "chip/chip.h"
+
 #include <cstdint>
 #include <memory>
 #include <vector>
-
-#include "chip/chip.h"
-#include "pin_board/pin.h"
 
 namespace pin_board {
 

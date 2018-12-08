@@ -1,6 +1,8 @@
 #ifndef PINBOARD_PIN_H
 #define PINBOARD_PIN_H
 
+#include <cstdint>
+
 namespace pin_board {
 
 typedef std::size_t PinIndex;

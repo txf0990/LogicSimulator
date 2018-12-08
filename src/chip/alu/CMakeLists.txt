@@ -1,0 +1,13 @@
+add_library(alu alu.h alu.cpp)
+target_link_libraries(alu basic_gates)
+target_link_libraries(alu pin_board)
+target_link_libraries(alu mux)
+target_link_libraries(alu logic_cal)
+target_link_libraries(alu left_shifter)
+target_link_libraries(alu right_shifter)
+
+add_executable(alu_test alu_test.cpp)
+target_link_libraries(alu_test alu)
+target_link_libraries(alu_test gtest_main)
+target_link_libraries(alu_test chip_test_util)
+add_test(alu_test alu_test --gtest_color=yes)

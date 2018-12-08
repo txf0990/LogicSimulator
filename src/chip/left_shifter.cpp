@@ -4,6 +4,9 @@
 #include "chip_test_util.h"
 
 namespace chip {
+
+using pin_board::PinIndex;
+
 void LeftShifter32::CreateChip(
             pin_board::PinBoard& mother,
             const std::vector<PinIndex>& input_pins,

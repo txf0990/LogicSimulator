@@ -13,19 +13,19 @@ class LeftShifter32 : virtual public Chip {
 public:
     static void CreateChip(
             pin_board::PinBoard& mother,
-            const std::vector<PinIndex>& input_pins,
-            std::vector<PinIndex> shamt,
-            const std::vector<PinIndex>& output_pins);
+            const std::vector<pin_board::PinIndex>& input_pins,
+            std::vector<pin_board::PinIndex> shamt,
+            const std::vector<pin_board::PinIndex>& output_pins);
 };
 
 class LeftShifter : virtual public Chip {
 public:
     static void CreateChip(
             pin_board::PinBoard& mother,
-            const std::vector<PinIndex>& input_pins,
+            const std::vector<pin_board::PinIndex>& input_pins,
             int shift_num,
-            PinIndex if_shift,
-            const std::vector<PinIndex>& output_pins);    // select_pin=1: select shifted. select_pin=0: select origin
+            pin_board::PinIndex if_shift,
+            const std::vector<pin_board::PinIndex>& output_pins);    // select_pin=1: select shifted. select_pin=0: select origin
 };
 
 }   // namespace chip

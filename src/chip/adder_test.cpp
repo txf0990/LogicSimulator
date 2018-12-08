@@ -82,4 +82,4 @@ TEST(AdderTest, Adder_2_input_16_digit_carry) {
             100);
 }
 
-}
+} // namespace

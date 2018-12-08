@@ -71,3 +71,5 @@ target_link_libraries(right_shifter_test right_shifter)
 target_link_libraries(right_shifter_test gtest_main)
 target_link_libraries(right_shifter_test chip_test_util)
 add_test(right_shifter_test right_shifter_test --gtest_color=yes)
+
+add_subdirectory(alu)
