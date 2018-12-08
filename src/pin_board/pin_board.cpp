@@ -51,8 +51,18 @@ void PinBoard::SetPin(PinIndex n, bool result) {
 
 PinIndex PinBoard::AllocatePin() {
     allocated_pin++;
-    assert(allocated_pin < total_pin_num - 2);
+    assert(allocated_pin < total_pin_num);
     return allocated_pin - 1;
+}
+
+std::vector<PinIndex> PinBoard::AllocatePins(size_t size) {
+    assert(allocated_pin + size < total_pin_num);
+    std::vector<PinIndex> result;
+    for (size_t i = 0; i < size; i++) {
+      result.push_back(allocated_pin);
+      ++allocated_pin;
+    }
+    return result;
 }
 
 void PinBoard::PlugChip(std::unique_ptr<chip::Chip> p) {

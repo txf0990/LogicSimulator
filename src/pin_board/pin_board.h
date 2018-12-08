@@ -23,6 +23,7 @@ public:
     bool GetPin(PinIndex pin);
     void SetPin(PinIndex pin, bool val);
     PinIndex AllocatePin();
+    std::vector<PinIndex> AllocatePins(size_t size);
     void PlugChip(std::unique_ptr<chip::Chip> chip);
 
     void SetInput(const std::vector<bool>& input, int offset = 0);

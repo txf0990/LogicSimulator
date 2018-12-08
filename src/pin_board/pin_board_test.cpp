@@ -1,8 +1,10 @@
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
 #include "pin_board/pin_board.h"
 
 namespace {
 
+using ::testing::ElementsAre;
 using pin_board::PinBoard;
 
 TEST(PinBoardTest, Simple) {
@@ -32,6 +34,14 @@ TEST(PinBoardTest, PinAllocationTest) {
     EXPECT_EQ(board.free_pin_offset + 1, board.AllocatePin());
     EXPECT_EQ(board.free_pin_offset + 2, board.AllocatePin());
     EXPECT_EQ(board.free_pin_offset + 3, board.AllocatePin());
+}
+
+TEST(PinBoardTest, PinsAllocationTest) {
+    PinBoard board(200, 10, 20);
+
+    auto i = board.free_pin_offset;
+
+    EXPECT_THAT(board.AllocatePins(4), ElementsAre(i, i + 1, i + 2, i + 3));
 }
 
 }
