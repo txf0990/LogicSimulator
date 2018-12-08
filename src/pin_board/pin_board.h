@@ -6,10 +6,9 @@
 #include <vector>
 
 #include "chip/chip.h"
+#include "pin_board/pin.h"
 
 namespace pin_board {
-
-typedef std::size_t PinIndex;
 
 class PinBoard {
 public:
