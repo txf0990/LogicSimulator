@@ -18,37 +18,26 @@ using std::vector;
 
 void GenerateAndTest(int digit) {
     PinBoard board(digit * 20, 1 + 2 * digit, digit + 1);
-    Adder_2::CreateChip(board, GetVectorPart(1, digit), GetVectorPart(digit + 1, digit), 0, GetVectorPart(2 * digit + 1, digit + 1));
+    Adder_2::CreateChip(
+        board,
+        GetVectorPart(board.input_offset + 1, digit),
+        GetVectorPart(board.input_offset + digit + 1, digit),
+        board.input_offset,
+        GetVectorPart(board.output_offset, digit + 1));
     vector<pair<vector<bool>, vector<bool>>> test_cases;
     vector<int> s = {1, digit, digit};      // input sizes: select_pin, input1, input2.
     for(int carry = 0; carry <= 1; carry++) {
         for(int n1 = 0; n1 < (1 << digit); n1++) {
             for(int n2 = 0; n2 < (1 << digit); n2++) {
-                test_cases.push_back({GeneratePins({carry, n1, n2}, s), NumberToPins(carry + n1 + n2, digit + 1)});
+                test_cases.push_back({
+                    GeneratePins({ carry, n1, n2 }, s),
+                    NumberToPins(carry + n1 + n2, digit + 1)
+                });
             }
         }
     }
     TestChipLogic(board, test_cases, 20);
 } 
-
-TEST(AdderTest, TwoInput) {
-    PinBoard board(10,2,2);
-    Adder::CreateChip(board, {0,1}, {2,3});
-    TestChipLogic(
-            board,
-            {
-                {false, false},
-                {false, true},
-                {true, false},
-                {true, true},
-            },
-            {
-                {false, false},
-                {true, false},
-                {true, false},
-                {false, true},
-            });
-}
 
 TEST(AdderTest, Adder_2_input_1_digit_carry) {
     int digit = 1;
@@ -73,8 +62,13 @@ TEST(AdderTest, Adder_2_input_8_digit_carry) {
 */
 
 TEST(AdderTest, Adder_2_input_16_digit_carry) {
-    PinBoard board(320,33,17);
-    Adder_2::CreateChip(board, GetVectorPart(1,16), GetVectorPart(17,16), 0, GetVectorPart(33,17));
+    PinBoard board(320, 33, 17);
+    Adder_2::CreateChip(
+        board,
+        GetVectorPart(board.input_offset + 1, 16),
+        GetVectorPart(board.input_offset + 17,16),
+        board.input_offset,
+        GetVectorPart(board.output_offset, 17));
     vector<int> s = {1, 16, 16}; // input sizes
     TestChipLogic(
             board,

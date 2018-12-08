@@ -29,6 +29,10 @@ public:
     void GetOutput(std::vector<bool>& output, int offset = 0);
     PinIndex GetZeroPin() {return total_pin_num - 2;}
     PinIndex GetOnePin() {return total_pin_num - 1;}
+
+    const PinIndex input_offset;
+    const PinIndex output_offset;
+    const PinIndex free_pin_offset;
 private:
     // Used for ZeroPin and OnePin
     void SetCurrentPin(PinIndex pin, bool val);

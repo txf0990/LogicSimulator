@@ -8,7 +8,10 @@ using std::vector;
 namespace pin_board {
 
 PinBoard::PinBoard(PinIndex n, PinIndex x, PinIndex y)
-    : current_status((n + 2 + 63) / 64),
+    : input_offset(0),
+      output_offset(x),
+      free_pin_offset(x + y),
+      current_status((n + 2 + 63) / 64),
       next_status((n + 2 + 63) / 64),
       input_num(x), output_num(y),
       total_pin_num(n + 2),
@@ -16,7 +19,6 @@ PinBoard::PinBoard(PinIndex n, PinIndex x, PinIndex y)
       }
 
 void PinBoard::Tick() {
-
     SetPin(GetZeroPin(), false);
     SetPin(GetOnePin(), true);
     for(int i = 0; i < chips.size(); i++) {
@@ -60,12 +62,12 @@ void PinBoard::PlugChip(std::unique_ptr<chip::Chip> p) {
 
 void PinBoard::SetInput(const vector<bool>& input, int offset) {
     for(int i = 0; i < input.size(); i++) {
-        SetPin(offset + i, input[i]);
+        SetPin(input_offset + offset + i, input[i]);
     }
 }
 void PinBoard::GetOutput(vector<bool>& output, int offset) {
     for(int i = 0; i < output.size(); i++) {
-        output[i] = GetPin(input_num + offset + i);
+        output[i] = GetPin(output_offset + offset + i);
     }
 }
 } // namespace pin_board

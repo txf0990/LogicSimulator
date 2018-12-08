@@ -51,6 +51,7 @@ void Adder_2::CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex
         AndGate::CreateChip(mother, {Or1_o, carry_pin}, {And2_o});
         OrGate::CreateChip(mother, {And1_o,And2_o}, {output_pins[1]});
     } else {
+        assert(input1_pins.size() % 2 == 0);
         int digit = input1_pins.size();
         PinIndex Adder_o = mother.AllocatePin();
         std::vector<PinIndex> output = GetVectorPart(0, digit / 2, output_pins);
@@ -72,79 +73,6 @@ void Adder_2::CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex
                 output
                 );
     }
-    
-/*
-    else if (input1_pins.size() == 2) { 
-        PinIndex Adder_o = mother.AllocatePin();
-        Adder_2::CreateChip(mother, {input1_pins[0]}, {input2_pins[0]}, carry_pin, {output_pins[0], Adder_o});
-        Adder_2::CreateChip(mother, {input1_pins[1]}, {input2_pins[1]}, Adder_o, {output_pins[1], output_pins[2]});
-    } else if (input1_pins.size() == 4) {
-        PinIndex Adder_o = mother.AllocatePin();
-        Adder_2::CreateChip(mother, {input1_pins[0], input1_pins[1]}, {input2_pins[0], input2_pins[1]}, carry_pin, {output_pins[0], output_pins[1], Adder_o});
-        Adder_2::CreateChip(mother, {input1_pins[2], input1_pins[3]}, {input2_pins[2], input2_pins[3]}, Adder_o, {output_pins[2], output_pins[3], output_pins[4]});
-    } else if (input1_pins.size() == 8) {
-        PinIndex Adder_o = mother.AllocatePin();
-        std::vector<PinIndex> output = GetVectorPart(0, 4, output_pins);
-        output.push_back(Adder_o);
-        Adder_2::CreateChip(
-                mother, 
-                GetVectorPart(0, 4, input1_pins),
-                GetVectorPart(0, 4, input2_pins),
-                carry_pin, 
-                output
-                );
-        output.clear();
-        output = GetVectorPart(4, 5, output_pins);
-        Adder_2::CreateChip(
-                mother, 
-                GetVectorPart(4, 4, input1_pins),
-                GetVectorPart(4, 4, input2_pins),
-                Adder_o, 
-                output
-                );
-    } else if (input1_pins.size() == 16) {
-        PinIndex Adder_o = mother.AllocatePin();
-        std::vector<PinIndex> output = GetVectorPart(0, 8, output_pins);
-        output.push_back(Adder_o);
-        Adder_2::CreateChip(
-                mother, 
-                GetVectorPart(0,8, input1_pins),
-                GetVectorPart(0,8, input2_pins),
-                carry_pin, 
-                output
-                );
-        output.clear();
-        output = GetVectorPart(8, 9, output_pins);
-        Adder_2::CreateChip(
-                mother, 
-                GetVectorPart(8,8, input1_pins),
-                GetVectorPart(8,8, input2_pins),
-                Adder_o, 
-                output
-                );
-    } else if (input1_pins.size() == 32) {
-        PinIndex Adder_o = mother.AllocatePin();
-        std::vector<PinIndex> output = GetVectorPart(0, 16, output_pins);
-        output.push_back(Adder_o);
-        Adder_2::CreateChip(
-                mother, 
-                GetVectorPart(0, 16, input1_pins),
-                GetVectorPart(0, 16, input2_pins),
-                carry_pin, 
-                output
-                );
-        output.clear();
-        output = GetVectorPart(16, 17, output_pins);
-        Adder_2::CreateChip(
-                mother,
-                GetVectorPart(16, 16, input1_pins),
-                GetVectorPart(16, 16, input2_pins),
-                Adder_o,
-                output
-                );
-    }
-
-    */
 }
 
 }  //  namespace chip

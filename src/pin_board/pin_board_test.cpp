@@ -26,12 +26,12 @@ TEST(PinBoardTest, Simple) {
 }
 
 TEST(PinBoardTest, PinAllocationTest) {
-    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (200, 10, 20);
+    PinBoard board(200, 10, 20);
 
-    EXPECT_EQ(30, board->AllocatePin());
-    EXPECT_EQ(31, board->AllocatePin());
-    EXPECT_EQ(32, board->AllocatePin());
-    EXPECT_EQ(33, board->AllocatePin());
+    EXPECT_EQ(board.free_pin_offset, board.AllocatePin());
+    EXPECT_EQ(board.free_pin_offset + 1, board.AllocatePin());
+    EXPECT_EQ(board.free_pin_offset + 2, board.AllocatePin());
+    EXPECT_EQ(board.free_pin_offset + 3, board.AllocatePin());
 }
 
 }

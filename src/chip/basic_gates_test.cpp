@@ -30,194 +30,161 @@ void InitPins(PinBoard* board, std::vector<std::pair<PinIndex, bool>> input) {
 }
 
 TEST(BasicGatesTest, AndGate2) {
-    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10,2,2);
-    
-    InitPins(board.get(), {
-        {0, true},
-        {1, true},
-        {2, false},
-        {3, false}
-    });
+    PinBoard board(10,2,1);
 
-    board->Tick();
+    AndGate::CreateChip(
+        board,
+        GetVectorPart(board.input_offset, 2),
+        {board.output_offset});
 
-    std::unique_ptr<Chip> p1 = std::make_unique<AndGate>(std::vector<PinIndex>({0,1}), 4, board.get());
-    board->PlugChip(std::move(p1));
-    std::unique_ptr<Chip> p2 = std::make_unique<AndGate>(std::vector<PinIndex>({0,2}), 5, board.get());
-    board->PlugChip(std::move(p2));
-    std::unique_ptr<Chip> p3 = std::make_unique<AndGate>(std::vector<PinIndex>({2,3}), 6, board.get());
-    board->PlugChip(std::move(p3));
-
-    board->Tick();
-
-    EXPECT_EQ(true, board->GetPin(4));
-    EXPECT_EQ(false, board->GetPin(5));
-    EXPECT_EQ(false, board->GetPin(6));
+    TestChipLogic(
+        board,
+        {
+          { {true, true}, {true} },
+          { {true, false}, {false} },
+          { {false, true}, {false} },
+          { {false, false}, {false} },
+        }
+    );
 }
 
 TEST(BasicGatesTest, AndGate3) {
-    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10,2,2);
+    PinBoard board(10,3,1);
 
-    InitPins(board.get(), {
-        {0, true},
-        {1, true},
-        {2, true},
-        {3, false},
-        {4, false},
-        {5, false},
-    });
+    AndGate::CreateChip(
+        board,
+        GetVectorPart(board.input_offset, 3),
+        {board.output_offset});
 
-    board->Tick();
-
-    std::unique_ptr<Chip> p1 = std::make_unique<AndGate>(std::vector<PinIndex>({0,1,2}), 6, board.get());
-    board->PlugChip(std::move(p1));
-    std::unique_ptr<Chip> p2 = std::make_unique<AndGate>(std::vector<PinIndex>({0,2,3}), 7, board.get());
-    board->PlugChip(std::move(p2));
-    std::unique_ptr<Chip> p3 = std::make_unique<AndGate>(std::vector<PinIndex>({0,3,4}), 8, board.get());
-    board->PlugChip(std::move(p3));
-    std::unique_ptr<Chip> p4 = std::make_unique<AndGate>(std::vector<PinIndex>({3,4,5}), 9, board.get());
-    board->PlugChip(std::move(p4));
-
-    board->Tick();
-
-    EXPECT_EQ(true, board->GetPin(6));
-    EXPECT_EQ(false, board->GetPin(7));
-    EXPECT_EQ(false, board->GetPin(8));
-    EXPECT_EQ(false, board->GetPin(9));
+    TestChipLogic(
+        board,
+        {
+          { {true, true, true}, {true} },
+          { {true, true, false}, {false} },
+          { {true, false, true}, {false} },
+          { {false, true, true}, {false} },
+          { {true, false, false}, {false} },
+          { {false, true, false}, {false} },
+          { {false, false, true}, {false} },
+          { {false, false, false}, {false} },
+        }
+    );
 }
 
 TEST(BasicGatesTest, OrGate2) {
-    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10,2,2);
+    PinBoard board(10,2,1);
 
-    InitPins(board.get(), {
-        {0, true},
-        {1, true},
-        {2, false},
-        {3, false},
-    });
+    OrGate::CreateChip(
+        board,
+        GetVectorPart(board.input_offset, 2),
+        {board.output_offset});
 
-    board->Tick();
-
-    std::unique_ptr<Chip> p1 = std::make_unique<OrGate>(std::vector<PinIndex>({0,1}), 4, board.get());
-    board->PlugChip(std::move(p1));
-    std::unique_ptr<Chip> p2 = std::make_unique<OrGate>(std::vector<PinIndex>({0,2}), 5, board.get());
-    board->PlugChip(std::move(p2));
-    std::unique_ptr<Chip> p3 = std::make_unique<OrGate>(std::vector<PinIndex>({2,3}), 6, board.get());
-    board->PlugChip(std::move(p3));
-
-    board->Tick();
-
-    EXPECT_EQ(true, board->GetPin(4));
-    EXPECT_EQ(true, board->GetPin(5));
-    EXPECT_EQ(false, board->GetPin(6));
+    TestChipLogic(
+        board,
+        {
+          { {true, true}, {true} },
+          { {true, false}, {true} },
+          { {false, true}, {true} },
+          { {false, false}, {false} },
+        }
+    );
 }
 
 TEST(BasicGatesTest, OrGate3) {
-    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (10,2,2);
+    PinBoard board(10,3,1);
 
-    InitPins(std::move(board.get()), {
-        {0, true},
-        {1, true},
-        {2, true},
-        {3, false},
-        {4, false},
-        {5, false},
-    });
+    OrGate::CreateChip(
+        board,
+        GetVectorPart(board.input_offset, 3),
+        {board.output_offset});
 
-    board->Tick();
-
-    std::unique_ptr<Chip> p1 = std::make_unique<OrGate>(std::vector<PinIndex>({0,1,2}), 6, board.get());
-    board->PlugChip(std::move(p1));
-    std::unique_ptr<Chip> p2 = std::make_unique<OrGate>(std::vector<PinIndex>({0,2,3}), 7, board.get());
-    board->PlugChip(std::move(p2));
-    std::unique_ptr<Chip> p3 = std::make_unique<OrGate>(std::vector<PinIndex>({0,3,4}), 8, board.get());
-    board->PlugChip(std::move(p3));
-    std::unique_ptr<Chip> p4 = std::make_unique<OrGate>(std::vector<PinIndex>({3,4,5}), 9, board.get());
-    board->PlugChip(std::move(p4));
-
-    board->Tick();
-
-    EXPECT_EQ(true, board->GetPin(6));
-    EXPECT_EQ(true, board->GetPin(7));
-    EXPECT_EQ(true, board->GetPin(8));
-    EXPECT_EQ(false, board->GetPin(9));
+    TestChipLogic(
+        board,
+        {
+          { {true, true, true}, {true} },
+          { {true, true, false}, {true} },
+          { {true, false, true}, {true} },
+          { {false, true, true}, {true} },
+          { {true, false, false}, {true} },
+          { {false, true, false}, {true} },
+          { {false, false, true}, {true} },
+          { {false, false, false}, {false} },
+        }
+    );
 }
 
 TEST(BasicGatesTest, NotGate) {
-    std::unique_ptr<PinBoard> board = std::make_unique<PinBoard> (4,1,1);
+    PinBoard board(10,1,1);
 
-    InitPins(board.get(), {
-        {0, true},
-        {1, false},
-    });
+    NotGate::CreateChip(
+        board,
+        { board.input_offset },
+        { board.output_offset });
 
-    board->Tick();
-
-    std::unique_ptr<Chip> p1 = std::make_unique<NotGate>(0, 2, board.get());
-    board->PlugChip(std::move(p1));
-    std::unique_ptr<Chip> p2 = std::make_unique<NotGate>(1, 3, board.get());
-    board->PlugChip(std::move(p2));
-
-    board->Tick();
-
-    EXPECT_EQ(false, board->GetPin(2));
-    EXPECT_EQ(true, board->GetPin(3));
+    TestChipLogic(
+        board,
+        {
+          { {true}, {false} },
+          { {false}, {true} },
+        }
+    );
 }
 
 TEST(BasicGatesTest, NandGate) {
     PinBoard board(10,2,1);
-    NandGate::CreateChip(board, {0,1}, {2});
+
+    NandGate::CreateChip(
+        board,
+        GetVectorPart(board.input_offset, 2),
+        {board.output_offset});
+
     TestChipLogic(
-            board,
-            {
-                {false, false},
-                {false, true},
-                {true, false},
-                {true, true},
-            },
-            {
-                {true},
-                {true},
-                {true},
-                {false},
-            });
+        board,
+        {
+          { {true, true}, {false} },
+          { {true, false}, {true} },
+          { {false, true}, {true} },
+          { {false, false}, {true} },
+        }
+    );
 }
 
 TEST(BasicGatesTest, NorGate) {
     PinBoard board(10,2,1);
-    NorGate::CreateChip(board, {0,1}, {2});
+
+    NorGate::CreateChip(
+        board,
+        GetVectorPart(board.input_offset, 2),
+        {board.output_offset});
+
     TestChipLogic(
-            board,
-            {
-                {false, false},
-                {false, true},
-                {true, false},
-                {true, true},
-            },
-            {
-                {true},
-                {false},
-                {false},
-                {false},
-            });
+        board,
+        {
+          { {true, true}, {false} },
+          { {true, false}, {false} },
+          { {false, true}, {false} },
+          { {false, false}, {true} },
+        }
+    );
 }
 
 TEST(BasicGatesTest, XorGate) {
     PinBoard board(10,2,1);
-    XorGate::CreateChip(board, {0,1}, {2});
+
+    XorGate::CreateChip(
+        board,
+        GetVectorPart(board.input_offset, 2),
+        {board.output_offset});
+
     TestChipLogic(
-            board,
-            {
-                {false, false},
-                {false, true},
-                {true, false},
-                {true, true},
-            },
-            {
-                {false},
-                {true},
-                {true},
-                {false},
-            });
+        board,
+        {
+          { {true, true}, {false} },
+          { {true, false}, {true} },
+          { {false, true}, {true} },
+          { {false, false}, {false} },
+        }
+    );
 }
-}
+
+} // namespace

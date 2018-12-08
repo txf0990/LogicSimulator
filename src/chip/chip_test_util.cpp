@@ -8,6 +8,7 @@ using pin_board::PinIndex;
 using pin_board::PinBoard;
 using std::vector;
 
+// Deprecated: DO NOT USE
 bool TestChipLogic(
         PinBoard& board,
         const vector<vector<bool>>& input,
@@ -80,7 +81,7 @@ vector<PinIndex> GetVectorPart (int begin, int length, const vector<PinIndex>& v
     vector<PinIndex> result;
     if (!v.empty()) {
         for(int i = begin; i < begin + length; i++) {
-            result.push_back(v[i]);
+            result.push_back(v.at(i));
         }
     } else {
         for(int i = begin; i < begin + length; i++) {
