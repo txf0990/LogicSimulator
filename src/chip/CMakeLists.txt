@@ -17,6 +17,11 @@ target_link_libraries(left_shifter basic_gates)
 target_link_libraries(left_shifter pin_board)
 target_link_libraries(left_shifter mux)
 
+add_library(right_shifter right_shifter.h right_shifter.cpp)
+target_link_libraries(right_shifter basic_gates)
+target_link_libraries(right_shifter pin_board)
+target_link_libraries(right_shifter mux)
+
 add_library(chip_test_util chip_test_util.h chip_test_util.cpp)
 target_link_libraries(chip_test_util gtest)
 
@@ -65,3 +70,11 @@ target_link_libraries(left_shifter_test left_shifter)
 target_link_libraries(left_shifter_test gtest_main)
 target_link_libraries(left_shifter_test chip_test_util)
 add_test(left_shifter_test left_shifter_test --gtest_color=yes)
+
+add_executable(right_shifter_test right_shifter_test.cpp)
+target_link_libraries(right_shifter_test basic_gates)
+target_link_libraries(right_shifter_test pin_board)
+target_link_libraries(right_shifter_test right_shifter)
+target_link_libraries(right_shifter_test gtest_main)
+target_link_libraries(right_shifter_test chip_test_util)
+add_test(right_shifter_test right_shifter_test --gtest_color=yes)
