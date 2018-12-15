@@ -33,6 +33,6 @@ This ALU implements:
 | 0000 | b << shamt |
 | 0010 | b >> shamt (complement 0) |
 | 0011 | b >> shamt (complement most significant) |
-| 0100 | a << b |
-| 0110 | a >> b (complement 0)|
-| 0111 | a >> b (complement most significant)|
+| 0100 | b << a |
+| 0110 | b >> a (complement 0)|
+| 0111 | b >> a (complement most significant)|
