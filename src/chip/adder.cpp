@@ -11,6 +11,7 @@ using pin_board::PinIndex;
 
 void Adder_2::CreateChip(pin_board::PinBoard& mother, const std::vector<PinIndex>& input1_pins, const std::vector<PinIndex>& input2_pins, const PinIndex carry_pin, const std::vector<PinIndex>& output_pins) {
     assert(input1_pins.size() == input2_pins.size());
+    assert(input1_pins.size() + 1 == output_pins.size());
     // input_pins = {low_dig, high_dig}
     // output_pins = {low_dig, high_dig}
     // if we want to calcualte 01+10, then the input is {1,0},{0,1}. output is {1,1,0}

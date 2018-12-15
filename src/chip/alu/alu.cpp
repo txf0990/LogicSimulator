@@ -1,10 +1,13 @@
 #include "chip/alu/alu.h"
 
+#include "chip/adder.h"
 #include "chip/logic_cal.h"
 #include "chip/mux.h"
 #include "pin_board/pin_board.h"
 
 #include <cassert>
+
+#include <iostream>
 
 namespace chip {
 
@@ -50,6 +53,12 @@ void Alu::AllocatePins(PinBoard& board, AluInternalPins& p) {
 void Alu::CalculateAddMinus(
     pin_board::PinBoard& board,
     AluInternalPins p) {
+  auto xor_output = board.AllocatePins(32);
+  std::vector<PinIndex> f1_32(32, p.func[1]);
+  BitwiseChip<XorGate>::CreateChip(board, p.b, f1_32, xor_output);
+  auto adder_output = p.add_minus_output;
+  adder_output.push_back(board.AllocatePin());
+  chip::Adder_2::CreateChip(board, p.a, xor_output, p.func[1], adder_output);
 }
 
 void Alu::CalculateBitwise(
