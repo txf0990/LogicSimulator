@@ -33,7 +33,7 @@ public:
     };
 
     static void CreateChip(
-        pin_board::PinBoard& mother,
+        pin_board::PinBoard& board,
         const std::vector<pin_board::PinIndex>& input1_pins,
         const std::vector<pin_board::PinIndex>& input2_pins,
         const std::vector<pin_board::PinIndex>& shamt,
@@ -41,20 +41,24 @@ public:
         const std::vector<pin_board::PinIndex>& output_pins);
 
     // helper functions
+    static void AllocatePins(
+        pin_board::PinBoard& board,
+        AluInternalPins& p);
+
     static void CalculateAddMinus(
-        pin_board::PinBoard& mother,
+        pin_board::PinBoard& board,
         AluInternalPins p);
 
     static void CalculateBitwise(
-        pin_board::PinBoard& mother,
+        pin_board::PinBoard& board,
         AluInternalPins p);
 
     static void CalculateShift(
-        pin_board::PinBoard& mother,
+        pin_board::PinBoard& board,
         AluInternalPins p);
 
     static void CalculateOutput(
-        pin_board::PinBoard& mother,
+        pin_board::PinBoard& board,
         AluInternalPins p);
 };
 
