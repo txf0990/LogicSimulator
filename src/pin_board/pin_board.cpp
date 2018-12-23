@@ -2,8 +2,11 @@
 
 #include <cassert>
 #include <iostream>
+#include <sstream>
+#include <string>
 
 using std::vector;
+using std::string;
 
 namespace pin_board {
 
@@ -49,20 +52,33 @@ void PinBoard::SetPin(PinIndex n, bool result) {
     }
 }
 
-PinIndex PinBoard::AllocatePin() {
-    allocated_pin++;
-    assert(allocated_pin < total_pin_num);
-    return allocated_pin - 1;
+void PinBoard::EntitlePins(string name, vector<PinIndex> pins) {
+  auto result = named_pins.insert(
+      std::pair<const string, vector<PinIndex>>(name, pins));
+  // Not overwriting an existing name
+  assert(result.second);
 }
 
-std::vector<PinIndex> PinBoard::AllocatePins(size_t size) {
-    assert(allocated_pin + size < total_pin_num);
-    std::vector<PinIndex> result;
-    for (size_t i = 0; i < size; i++) {
-      result.push_back(allocated_pin);
-      ++allocated_pin;
-    }
-    return result;
+PinIndex PinBoard::AllocatePin(string name) {
+  if (!name.empty()) {
+    EntitlePins(name, {allocated_pin});
+  }
+  allocated_pin++;
+  assert(allocated_pin < total_pin_num);
+  return allocated_pin - 1;
+}
+
+std::vector<PinIndex> PinBoard::AllocatePins(size_t size, string name) {
+  assert(allocated_pin + size < total_pin_num);
+  std::vector<PinIndex> result;
+  for (size_t i = 0; i < size; i++) {
+    result.push_back(allocated_pin);
+    ++allocated_pin;
+  }
+  if (!name.empty()) {
+    EntitlePins(name, result);
+  }
+  return result;
 }
 
 void PinBoard::PlugChip(std::unique_ptr<chip::Chip> p) {
@@ -75,9 +91,30 @@ void PinBoard::SetInput(const vector<bool>& input, int offset) {
         SetPin(input_offset + offset + i, input[i]);
     }
 }
+
 void PinBoard::GetOutput(vector<bool>& output, int offset) {
     for(int i = 0; i < output.size(); i++) {
         output[i] = GetPin(output_offset + offset + i);
     }
 }
+
+string PinBoard::NamedPinsStatus() {
+  std::ostringstream oss;
+  long long num;
+  long long bit;
+  for (const auto& p : named_pins) {
+    oss << p.first << ": {";
+    num = 0;
+    bit = 1;
+    for (size_t i = 0; i < p.second.size(); i++) {
+      int v = GetPin(p.second[i]) ? 1 : 0;
+      num |= bit * v;
+      bit <<= 1;
+      oss << v;
+    }
+    oss << "(" << num << ")}\n";
+  }
+  return oss.str();
+}
+
 } // namespace pin_board

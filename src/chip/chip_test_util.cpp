@@ -1,14 +1,16 @@
 #include <iostream>
 
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
 #include "chip/chip_test_util.h"
 #include "pin_board/pin_board.h"
 
 using pin_board::PinIndex;
 using pin_board::PinBoard;
 using std::vector;
+using ::testing::ElementsAreArray;
 
-bool TestChipLogic(
+void TestChipLogic(
         PinBoard& board,
         const std::vector<
             std::pair<
@@ -17,21 +19,19 @@ bool TestChipLogic(
             >
         >& input_output,
         int latency) {
-    vector<bool> cal_output(input_output[0].second.size());
-    for(int i = 0; i < input_output.size(); i++) {
-        for(int j = 0; j < latency; j++) {
-            board.SetInput(input_output[i].first);
-            board.Tick();
-        }
-        board.GetOutput(cal_output);
-        for(int j = 0; j < input_output[i].second.size(); j++) {
-            EXPECT_EQ(input_output[i].second[j], cal_output[j])
-                << "expected_output[" << i << "][" << j << "] "
-                << "!= cal_output[" << j << "]";
-        }
-    }
+  if (input_output.empty()) return;
 
-    return true;
+  vector<bool> cal_output(input_output[0].second.size());
+  for(int i = 0; i < input_output.size(); i++) {
+      for(int j = 0; j < latency; j++) {
+          board.SetInput(input_output[i].first);
+          board.Tick();
+      }
+      board.GetOutput(cal_output);
+      EXPECT_THAT(cal_output, ElementsAreArray(input_output[i].second))
+          << "Test Case #" << i << std::endl
+          << board.NamedPinsStatus();
+  }
 }
 
 void AppendPinsByNumber(vector<bool>& array, int number, int size) {

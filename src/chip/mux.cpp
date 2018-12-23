@@ -15,6 +15,7 @@ void Mux::CreateChip(
         const std::vector<PinIndex>& output_pins) {
 
     assert(input0_pins.size() == input1_pins.size());
+    assert(input0_pins.size() == output_pins.size());
     if (input0_pins.size() == 1) {
         PinIndex And1_o = board.AllocatePin();
         PinIndex And2_o = board.AllocatePin();

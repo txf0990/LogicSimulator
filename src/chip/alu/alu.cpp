@@ -1,9 +1,11 @@
 #include "chip/alu/alu.h"
 
 #include "chip/adder.h"
+#include "chip/left_shifter.h"
 #include "chip/logic_cal.h"
 #include "chip/mux.h"
 #include "pin_board/pin_board.h"
+#include "chip/right_shifter.h"
 
 #include <cassert>
 
@@ -13,6 +15,7 @@ namespace chip {
 
 using pin_board::PinBoard;
 using pin_board::PinIndex;
+using std::vector;
 
 void Alu::CreateChip(
     pin_board::PinBoard& board,
@@ -84,11 +87,33 @@ void Alu::CalculateBitwise(
 void Alu::CalculateShift(
     pin_board::PinBoard& board,
     AluInternalPins p) {
+  vector<PinIndex> shift_5_bit = board.AllocatePins(5);
+  Mux::CreateChip(board, p.shamt, {p.a[0],p.a[1],p.a[2],p.a[3],p.a[4]}, p.func[2], shift_5_bit);
+  PinIndex shift_complement_value = board.AllocatePin();
+  AndGate::CreateChip(board, {p.func[0], p.b[31]}, {shift_complement_value});
+  vector<PinIndex> left_shifter_result_32_bit = board.AllocatePins(32);
+  vector<PinIndex> right_shifter_result_32_bit = board.AllocatePins(32);
+  chip::LeftShifter32::CreateChip(
+      board,
+      p.b,
+      shift_5_bit,
+      left_shifter_result_32_bit);
+  chip::RightShifter32::CreateChip(
+      board,
+      p.b,
+      shift_5_bit,
+      shift_complement_value,
+      right_shifter_result_32_bit);  
+  Mux::CreateChip(
+      board,
+      left_shifter_result_32_bit,
+      right_shifter_result_32_bit,
+      p.func[1],
+      p.shift_output);
 }
 
 void Alu::CalculateOutput(
     pin_board::PinBoard& board,
     AluInternalPins p) {
-}
-
+  }
 }  // namespace chip

@@ -2,10 +2,15 @@
 #include "gmock/gmock.h"
 #include "pin_board/pin_board.h"
 
+#include <string>
+#include <vector>
+
 namespace {
 
 using ::testing::ElementsAre;
 using pin_board::PinBoard;
+using pin_board::PinIndex;
+using std::string;
 
 TEST(PinBoardTest, Simple) {
     PinBoard board(200, 10, 20);
@@ -42,6 +47,34 @@ TEST(PinBoardTest, PinsAllocationTest) {
     auto i = board.free_pin_offset;
 
     EXPECT_THAT(board.AllocatePins(4), ElementsAre(i, i + 1, i + 2, i + 3));
+}
+
+TEST(PinBoardTest, NamedPinsStatusTest) {
+    PinBoard board(200, 10, 20);
+
+    PinIndex s = board.AllocatePin("single_pin");
+    std::vector<PinIndex> t = board.AllocatePins(3, "triple_pin");
+    ASSERT_EQ(t.size(), 3);
+
+    board.SetPin(s, false);
+    board.SetPin(t[0], false);
+    board.SetPin(t[1], true);
+    board.SetPin(t[2], false);
+
+    board.Tick();
+
+    string expected = "single_pin: {0(0)}\ntriple_pin: {010(2)}\n";
+    EXPECT_EQ(board.NamedPinsStatus(), expected);
+
+    board.SetPin(s, true);
+    board.SetPin(t[0], false);
+    board.SetPin(t[1], true);
+    board.SetPin(t[2], true);
+
+    board.Tick();
+
+    expected = "single_pin: {1(1)}\ntriple_pin: {011(6)}\n";
+    EXPECT_EQ(board.NamedPinsStatus(), expected);
 }
 
 }

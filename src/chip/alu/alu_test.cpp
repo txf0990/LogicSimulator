@@ -105,4 +105,54 @@ TEST(AluTest, AddMinusOutput) {
   TestChipLogic(board, test_cases, 100);
 }
 
+TEST(AluTest, ShifterOutput) {
+  PinBoard board(2000, 64 + 5 + 4, 32);
+  Alu::AluInternalPins p;
+  p.a = GetVectorPart(board.input_offset, 32);
+  p.b = GetVectorPart(board.input_offset + 32, 32);
+  p.shamt = GetVectorPart(board.input_offset + 64, 5);
+  p.func = GetVectorPart(board.input_offset + 69, 4);
+  p.output = GetVectorPart(board.output_offset, 32);
+  Alu::AllocatePins(board, p);
+  p.shift_output = p.output;
+
+  Alu::CalculateShift(board, p);
+
+  vector<int> config = {32, 32, 5, 4};
+
+  vector<vector<int>> test_numbers = {
+    {1, 255, 2, 0},
+    {3, 1921681264, 1, 0},
+    {3, 1921681264, 1, 2},
+    {3, 1921681264, 1, 3},
+    {3, 1921681264, 1, 4},
+    {3, 1921681264, 1, 6},
+    {3, 1921681264, 1, 7},
+    {4, -1000, 5, 0},
+    {4, -1000, 5, 2},
+    {4, -1000, 5, 3},
+    {4, -1000, 5, 4},
+    {4, -1000, 5, 6},
+    {4, -1000, 5, 7},
+  };
+  vector< pair<vector<bool>, vector<bool>> > test_cases;
+
+  for (const auto& test_case : test_numbers) {
+    int a = test_case[0];
+    int b = test_case[1];
+    int shamt = test_case[2];
+    int func = test_case[3];
+    int result = 0;
+    if (func == 0) result = b << shamt;
+    else if (func == 2) result = static_cast<unsigned int>(b) >> shamt;
+    else if (func == 3) result = b >> shamt;
+    else if (func == 4) result = b << a;
+    else if (func == 6) result = static_cast<unsigned int>(b) >> a;
+    else if (func == 7) result = b >> a;
+
+    test_cases.push_back({GeneratePins(test_case, config), NumberToPins(result, 32)});
+  }
+  TestChipLogic(board, test_cases, 500);
+}
+////////
 } // namespace

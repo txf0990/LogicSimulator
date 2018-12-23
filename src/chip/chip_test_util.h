@@ -6,7 +6,7 @@
 #include "chip/chip.h"
 #include "pin_board/pin_board.h"
 
-bool TestChipLogic(
+void TestChipLogic(
         pin_board::PinBoard& board,
         const std::vector<
             std::pair<

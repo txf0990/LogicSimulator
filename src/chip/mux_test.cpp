@@ -24,16 +24,11 @@ void GenerateAndTest(int digit) {
         board.input_offset,
         GetVectorPart(board.output_offset, digit));
     vector<pair<vector<bool>, vector<bool>>> test_cases;
-    vector<int> s = {1, digit, digit};      // input sizes: select_pin, input1, input2.
-    for(int select = 0; select <= 1; select++) {
-        for(int n1 = 0; n1 < (1 << digit); n1++) {
-            for(int n2 = 0; n2 < (1 << digit); n2++) {
-                if (select == 0) {
-                    test_cases.push_back({GeneratePins({select, n1, n2}, s), NumberToPins(n1,digit)});
-                } else {
-                    test_cases.push_back({GeneratePins({select, n1, n2}, s), NumberToPins(n2,digit)});
-                }
-            }
+    vector<int> config = {1, digit, digit};      // input sizes: select_pin, input1, input2.
+    for(int n1 = 0; n1 < (1 << digit); n1++) {
+        for(int n2 = 0; n2 < (1 << digit); n2++) {
+            test_cases.push_back({GeneratePins({0, n1, n2}, config), NumberToPins(n1,digit)});
+            test_cases.push_back({GeneratePins({1, n1, n2}, config), NumberToPins(n2,digit)});
         }
     }
     TestChipLogic(board, test_cases, 20);

@@ -9,6 +9,6 @@ target_link_libraries(alu right_shifter)
 
 add_executable(alu_test alu_test.cpp)
 target_link_libraries(alu_test alu)
-target_link_libraries(alu_test gtest_main)
+target_link_libraries(alu_test gmock_main)
 target_link_libraries(alu_test chip_test_util)
 add_test(alu_test alu_test --gtest_color=yes)
